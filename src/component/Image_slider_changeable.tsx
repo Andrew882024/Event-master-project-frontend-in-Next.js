@@ -3,17 +3,23 @@
 import { useState } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
+type ImageSliderProps = {
+  width: number;
+  height: number;
+};
 
 
-const Image_slider = () => {
+
+const Image_slider_changeable = ({width, height}:ImageSliderProps) => {
 
   let imgList: string[] = ["/UCSD_1.webp", "/UCSD_2.webp", "/UCSD_3.png"];
   const [imgstate, setImgstate] = useState(0);
 
   return (
-    <div className="absolute w-[600px] h-[400px] bg-white flex items-center justify-center box-border rounded-2xl">
-      <div className="w-full h-full flex rounded-2xl overflow-hidden">
-        {imgList.map(url=>(<img src={url} key={url} className="transition duration-300 w-full h-full rounded-2xl " style={{ transform: `translateX(${-100 * imgstate}%)` }}/>))} 
+    //<div className={`absolute w-[${width}px] h-[${height}px] bg-white flex items-center justify-center box-border rounded-2xl overflow-hidden border-[3px] border-black`}>
+     <div className={`absolute w-[${width}px] h-[${height}px] bg-white flex items-center justify-center box-border rounded-2xl overflow-hidden border-[3px] border-black`}> 
+      <div className="w-full h-full flex rounded-2xl overflow-hidden items-center ">
+        {imgList.map(url=>(<img src={url} key={url} className="transition duration-300 w-[900px] h-[500px] rounded-2xl bg-cover" style={{ transform: `translateX(${-100 * imgstate}%)` }}/>))} 
       </div>
 
 
@@ -40,4 +46,4 @@ const Image_slider = () => {
   );
 }
 
-export default Image_slider;
+export default Image_slider_changeable;

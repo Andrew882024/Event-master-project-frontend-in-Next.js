@@ -30,10 +30,10 @@ const Control_broad = () => {
             <div className="inline-block m-4 cursor-pointer" onClick={() => loadPage("/Notice_page")}>Notice</div>
             <div className="inline-block m-4 cursor-pointer" onClick={() => loadPage("/MyAccount_page")}>My Account</div>
           </div>
-          <div className="absolute top-[70px] left-[50px] text-gray-900 text-xl font-Nunito">
-            <div className="inline-flex box-border w-[100px] h-[30px] rounded-[10px] text-white items-center justify-center mx-[5px] font-Nunito cursor-pointer" onClick={() => loadPage("/")}>About Us</div>
-            <div className="inline-flex box-border w-[100px] h-[30px] rounded-[10px] text-white items-center justify-center mx-[5px] font-Nunito cursor-pointer" onClick={() => loadPage("/Events_page")}>Events</div>
-            <div className="inline-flex box-border w-[100px] h-[30px] rounded-[10px] text-white items-center justify-center mx-[5px] font-Nunito cursor-pointer" onClick={() => loadPage("/Support_page")}>Support</div>
+          <div className="absolute top-[70px] left-[50px] text-gray-800 text-[20px] font-Nunito">
+            <div className="inline-flex box-border w-[100px] h-[30px] rounded-[10px]  items-center justify-center mx-[5px] font-Nunito cursor-pointer" onClick={() => loadPage("/")}>About Us</div>
+            <div className="inline-flex box-border w-[100px] h-[30px] rounded-[10px] items-center justify-center mx-[5px] font-Nunito cursor-pointer" onClick={() => loadPage("/Events_page")}>Events</div>
+            <div className="inline-flex box-border w-[100px] h-[30px] rounded-[10px]  items-center justify-center mx-[5px] font-Nunito cursor-pointer" onClick={() => loadPage("/Support_page")}>Support</div>
           </div>
         </div>
       </div>
