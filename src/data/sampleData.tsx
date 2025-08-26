@@ -1,4 +1,5 @@
 export type EventInfo = {
+  eventId: string;
   type: string;
   title: string;
   provider: string;
@@ -16,6 +17,7 @@ export type EventInfo = {
 };
 
 export let InPageEventInforDefault:EventInfo = {
+  eventId: "id_1",
   type: "Music",
   title: "Academy of St. Martin in the Fields Chamber Ensemble",
   provider: "Chamber Music | UK",
@@ -37,6 +39,7 @@ Schubert: Octet in F major for Winds & Strings, D.803This is a detailed descript
 
 
 const EventInfoList: EventInfo[] = [{
+  eventId: "id_1",
   type: "Music",
   title: "Academy of St. Martin in the Fields Chamber Ensemble",
   provider: "Chamber Music | UK",
@@ -51,6 +54,7 @@ const EventInfoList: EventInfo[] = [{
   description: `The Academy Chamber Ensemble was formed in 1967, drawing its membership from the world-renowned chamber orchestra theAcademy of St Martin in the Fields, which was itself founded bySir Neville Marriner in 1958 and is currently led by Music DirectorJoshua Bell. The purpose behind the formation of the ChamberEnsemble was to perform the larger scale chamber music repertoire with players who customarily worked together, instead of the usual string quartet with additional guests. Drawn from the principal players of the orchestra and play-directed by Academy Director / Leader Tomo Keller, the Chamber Ensemble now performs in multiple configurations from wind trios to string octets. Its touring commitments are extensive and include regular tours of Europe and North America, whilst recording contracts with Philips Classics, Hyperion, and Chandos have led to the release of over thirty CDs.`
 },
 {
+  eventId: "id_2",
   type: "Show",
   title: "Soul Science Lab: Make a Joyful Noize",
   provider: "Family",
@@ -67,6 +71,7 @@ const EventInfoList: EventInfo[] = [{
 Soul Science Lab (SSL) is a music and multimedia duo powered by Chen Lo and Asante Amin. The two are storytellers who inspire the future with hip hop, jazz, soul and stunning visuals installations. The duo’s current projects include Soundtrack ’63, Make a Joyful Noize (commissioned by Carnegie Hall), and The Renaissance Mixtape (commissioned by the Apollo Theater). SSL has released three studio albums: Footprints, The Visitor: Alter Destiny, and Plan for Paradise. SSL has also developed a culturally responsive education platform for music creatives and educators at Soul Science University—just call them innovative Afro-futuristic griots.`,
 },
 {
+  eventId: "id_3",
   type: "Show",
   title: "(Canceled) Celebrate Ameri’KANA",
   provider: "Global Music",
@@ -92,6 +97,7 @@ The band collaborated with Rubén Blades on the single “No Te Calles,” which
 La Lulu, a Latin Grammy-winning violinist, vocalist, and dancer whose explosive stage presence channels the soul of cumbia through a New York lens. Born in Cali, Colombia and raised in NYC, La Lulu fuses salsa, spanglish rhymes, and unapologetic energy into music that is both deeply rooted and fiercely contemporary.`,
 },
 {
+  eventId: "id_4",
   type: "Music",
   title: "Nate Smith and Keyon Harrold",
   provider: "Jazz | USA",
@@ -115,6 +121,7 @@ About Keyon Harrold
 Keyon Harrold first came into the International spotlight for his work as the trumpet voice behind the Grammy winning Don Cheadle film Miles Ahead, and his critically acclaimed album, The Mugician, (Sony Legacy / Mass Appeal). As a bandleader, he has created a compelling new statement with a riveting mix of jazz, Afrobeat, soul, spoken word, hip-hop, blues, rock, and even American folk. As a soloist, his distinctly warm trumpet sound simmers in the middle register; creating drama without aggrandizing, and mesmerizing live audiences with an emotionally charged concert presentation. Wynton Marsalis has stated “Keyon Harrold is the future of the trumpet”. In addition to being one of the leading voices in Jazz Music, Keyon Harrold has collaborated with many of the top hip hop and pop artists including: Snoop Dogg, Jay Z, Beyonce, Rihanna, Eminem, Maxwell, and Anthony Hamilton, and rock legends Keith Richards and Jeff Beck. These experiences broadened his musical horizons beyond jazz to include funk, Afrobeat, R&B, rock and roll, and hip hop.`,
 },
 {
+  eventId: "id_5",
   type: "Show",
   title: "Bia Ferreira",
   provider: "Global Music | Brazil",
@@ -135,6 +142,7 @@ Her breakthrough came during a Sofar Sounds session, where she performed “Cota
 `,
 },
 {
+  eventId: "id_6",
   type: "Show",
   title: "LA LOM",
   provider: "Global Music | USA",
