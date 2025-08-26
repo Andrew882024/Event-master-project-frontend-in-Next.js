@@ -1,36 +1,65 @@
 import Control_broad from "../../src/component/Control_broad";
+import { EventInfo } from "@/src/data/sampleData";
+import { InPageEventInforDefault } from "@/src/data/sampleData";
 
 //style={{backgroundImage: "url('/UCSD_1.webp')", backgroundSize: 'cover'}}
 
-let InPageEventInfor:object = {
-  type: "Music",
-  title: "Academy of St. Martin in the Fields Chamber Ensemble",
-  provider: "Chamber Music | UK",
-  date: "2024-07-15",
-  time: "18:00 - 20:00",
-  location: "Department of Music's Conrad Prebys Concert Hall",
-  imageUrl: "/asm-hero.png",
-  description: `The Academy Chamber Ensemble was formed in 1967, drawing its membership from the world-renowned chamber orchestra theAcademy of St Martin in the Fields, which was itself founded bySir Neville Marriner in 1958 and is currently led by Music DirectorJoshua Bell. The purpose behind the formation of the ChamberEnsemble was to perform the larger scale chamber music repertoire with players who customarily worked together, instead of the usual string quartet with additional guests. Drawn from the principal players of the orchestra and play-directed by Academy Director / Leader Tomo Keller, the Chamber Ensemble now performs in multiple configurations from wind trios to string octets. Its touring commitments are extensive and include regular tours of Europe and North America, whilst recording contracts with Philips Classics, Hyperion, and Chandos have led to the release of over thirty CDs.
 
-Program
-Huw Watkins: New commissioned work
-Françaix: Octet
-Schubert: Octet in F major for Winds & Strings, D.803This is a detailed description of the event. It provides information about what to expect, who should attend, and any other relevant details.`,
-}
 
-const Eventdetail_page = (eventInfor:object = InPageEventInfor) =>{
+const Eventdetail_page = ({eventInfor = InPageEventInforDefault}:{eventInfor?:EventInfo}) =>{
   return(
-    <div className="absolute top-0 left-0 bg-gray-100 min-h-screen w-screen" >
+    <div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-screen overflow-x-hidden" >
       <Control_broad/>
       <title>Event Detail Page</title>
-      <div className="absolute top-[115px] min-h-[1000px] w-full bg-gray-100 flex justify-center border-[2px] border-black">
-          <div className="w-[1160px] min-h-[1000px] border-[2px] border-black flex justify-center">
-            <div className="w-[1150px] h-[490px] border-[2px] border-black rounded-[10px] bg-green-100 text-black">
-              <div className="inline-flex w-[570px] h-[490px] border-[2px] border-black">
-                <div className="ml-[50px] mt-[50px] h-[30px] pl-[10px] pr-[10px] text-orange-400 border-[2px] border-black"></div>
+      <div className="absolute top-[115px] min-h-[1000px] w-full bg-gray-200">
+        <div className="flex justify-center w-full">
+          <div className="mt-[10px] w-[1160px] min-h-[490px]  flex justify-center">
+            <div className="absolute w-[1150px] h-[490px] ded-[10px]  text-black rounded-[10px]" style={{ backgroundColor: '#d8ffd8' }}>
+              <div className="absolute left-[2px] top-[0px] inline-block w-[570px] h-[490px] ">
+                <div className="ml-[30px] mt-[85px]  pl-[10px] pr-[10px] w-[500px] h-[250px] text-black text-[45px]  font-Nunito flex items-center justify-center">{eventInfor.title}</div>
+                <div className="ml-[35px] mt-[0px] h-[20px] pl-[5px] pr-[10px] w-[500px] text-gray-600 text-[15px] ">{`Start at: ${eventInfor.month} ${eventInfor.dayOfMonth} ${eventInfor.dayOfWeek}, ${eventInfor.startTime}`}</div>
+                <div className="ml-[35px] mt-[0px] h-[20px] pl-[5px] pr-[10px] w-[500px] text-gray-600 text-[15px] ">{`By: ${eventInfor.provider}`}</div>
               </div>
-              <div className="inline-flex w-[570px] h-[490px] border-[2px] border-black"></div>
+              
+              {/* right part image*/}
+              <div className="absolute right-[0px] top-[0px] inline-flex w-[570px] h-[490px]  items-center justify-center ">
+                <img src={eventInfor.imageUrl} className="w-[490px] h-[290px] object-cover rounded-[10px]"/>
+              </div>
             </div>
+          </div>
+          </div>
+          <div className="flex justify-center w-full">
+          <div className=" mt-[20px] w-[1200px] min-h-[800px]  flex justify-center">
+            {/*left part*/}
+            <div className=" w-[690px] min-h-[800px] mr-[50px]">
+              <div className="text-blue-900 text-[35px] font-Nunito">About</div>
+              <div className="text-gray-600 text-[15px] ml-[20px] mt-[10px]">{eventInfor.description}</div>
+            </div>
+            {/*right part*/}
+            <div className=" w-[400px] min-h-[800px] ">
+              <div className=" w-[100%] min-h-[300px]">
+                <div className="text-blue-900 text-[35px] font-Nunito">Event details</div>
+
+                {/*Date&time*/}
+                <div className="text-gray-800 text-[18px] font-bold ml-[20px] mt-[10px]">Date&time:</div>
+                <div className="text-gray-600 text-[15px] font-Nunito ml-[25px] mt-[0px] w-[350px] ">{`${eventInfor.date} (${eventInfor.month} ${eventInfor.dayOfMonth} ${eventInfor.dayOfWeek}) `}</div>
+                <div className="text-gray-600 text-[15px] font-Nunito ml-[25px] mt-[0px] w-[350px] ">{`time:${eventInfor.time}`}</div>
+
+                {/*Location*/}
+                <div className="text-gray-800 text-[18px] font-bold ml-[20px] mt-[10px]">Location:</div>
+                <div className="text-gray-600 text-[15px] font-Nunito ml-[25px] mt-[0px] w-[350px] ">{eventInfor.location}</div>
+
+                {/*Provider*/}
+                <div className="text-gray-800 text-[18px] font-bold ml-[20px] mt-[10px]">Provider:</div>
+                <div className="text-gray-600 text-[15px] font-Nunito ml-[25px] mt-[0px] w-[350px]  mb-[35px]">{eventInfor.provider}</div>
+              </div>
+              <div className=" w-[100%] ">
+                <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">Total seats: 250</div>
+                <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">Available seats: 136</div>
+                <div className=" w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[10px]" >Sign Up A Seet</div>
+              </div>
+            </div>
+          </div>
           </div>
       </div>
     </div>

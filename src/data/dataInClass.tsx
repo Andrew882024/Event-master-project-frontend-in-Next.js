@@ -20,6 +20,8 @@ let eventInfor:object ={
     audience: [],
 }
 
+
+
 let allEvent:object[] = [];
 
 export {userInfor, eventInfor, allEvent};
