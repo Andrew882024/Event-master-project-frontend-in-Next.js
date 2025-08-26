@@ -1,7 +1,10 @@
 import Control_broad from "../../src/component/Control_broad";
 import Event_box1 from "../../src/component/small_element/Event_box1";
+import {EventInfo, EventInfoList} from "@/src/data/sampleData";
 
 const Events_page = () =>{
+
+  console.log(EventInfoList[1]);
   
   return(<div className="absolute top-0 left-0 bg-gray-100 min-h-screen w-screen" style={{backgroundImage: "url('/UCSD_1.webp')", backgroundSize: 'cover'}}>
     <Control_broad/>
@@ -18,7 +21,10 @@ const Events_page = () =>{
       <div className="  m-[10px]">
         <div className="text-[15px] text-gray-500 ">Event in this week:</div>
         <div className=" flex flex-wrap">
-          <Event_box1 />
+          {EventInfoList.map(EventInfo=>{
+            return(<Event_box1 InPageEventInfor={EventInfo} key={EventInfo.eventId}/>);
+          })}
+          <Event_box1 InPageEventInfor={EventInfoList[1]} />
           <Event_box1 />
           <Event_box1 />
           <Event_box1 />

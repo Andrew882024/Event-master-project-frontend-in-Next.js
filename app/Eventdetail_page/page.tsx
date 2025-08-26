@@ -1,12 +1,12 @@
 import Control_broad from "../../src/component/Control_broad";
 import { EventInfo } from "@/src/data/sampleData";
-import { InPageEventInforDefault } from "@/src/data/sampleData";
+import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 
 //style={{backgroundImage: "url('/UCSD_1.webp')", backgroundSize: 'cover'}}
 
 
 
-const Eventdetail_page = ({eventInfor = InPageEventInforDefault}:{eventInfor?:EventInfo}) =>{
+export const Eventdetail_page = ({eventInfor = EventInfoList[5]}:{eventInfor?:EventInfo}) =>{
   return(
     <div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-screen overflow-x-hidden" >
       <Control_broad/>
@@ -16,7 +16,7 @@ const Eventdetail_page = ({eventInfor = InPageEventInforDefault}:{eventInfor?:Ev
           <div className="mt-[10px] w-[1160px] min-h-[490px]  flex justify-center">
             <div className="absolute w-[1150px] h-[490px] ded-[10px]  text-black rounded-[10px]" style={{ backgroundColor: '#d8ffd8' }}>
               <div className="absolute left-[2px] top-[0px] inline-block w-[570px] h-[490px] ">
-                <div className="ml-[30px] mt-[85px]  pl-[10px] pr-[10px] w-[500px] h-[250px] text-black text-[45px]  font-Nunito flex items-center justify-center">{eventInfor.title}</div>
+                <div className="ml-[30px] mt-[85px]  pl-[10px] pr-[10px] w-[500px] h-[250px] text-black text-[45px]  font-Nunito flex items-center">{eventInfor.title}</div>
                 <div className="ml-[35px] mt-[0px] h-[20px] pl-[5px] pr-[10px] w-[500px] text-gray-600 text-[15px] ">{`Start at: ${eventInfor.month} ${eventInfor.dayOfMonth} ${eventInfor.dayOfWeek}, ${eventInfor.startTime}`}</div>
                 <div className="ml-[35px] mt-[0px] h-[20px] pl-[5px] pr-[10px] w-[500px] text-gray-600 text-[15px] ">{`By: ${eventInfor.provider}`}</div>
               </div>

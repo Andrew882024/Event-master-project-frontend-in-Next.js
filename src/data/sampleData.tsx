@@ -38,7 +38,7 @@ Schubert: Octet in F major for Winds & Strings, D.803This is a detailed descript
 };
 
 
-const EventInfoList: EventInfo[] = [{
+export const EventInfoList: EventInfo[] = [{
   eventId: "id_1",
   type: "Music",
   title: "Academy of St. Martin in the Fields Chamber Ensemble",
