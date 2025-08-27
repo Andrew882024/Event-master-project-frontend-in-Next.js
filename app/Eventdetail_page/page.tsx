@@ -6,7 +6,7 @@ import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 
 
 
-export const Eventdetail_page = ({eventInfor = EventInfoList[5]}:{eventInfor?:EventInfo}) =>{
+export const Eventdetail_page = ({eventInfor = EventInfoList[0]}:{eventInfor?:EventInfo}) =>{
   return(
     <div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-screen overflow-x-hidden" >
       <Control_broad/>
