@@ -1,6 +1,8 @@
+"use client";
+
 import { EventInfo } from "@/src/data/sampleData";
 import { InPageEventInforDefault } from "@/src/data/sampleData";
-
+import { useRouter } from 'next/navigation';
 
 
 
@@ -11,7 +13,11 @@ let InPageEventInfor:EventInfo;
 
 const Event_box1 = ({InPageEventInfor = InPageEventInforDefault}:{InPageEventInfor?:EventInfo} ) => {
 
-  
+  const navigate = useRouter();
+
+  function loadPage(root: string) {
+    navigate.push(root);
+  }
 
   const eventInfor: any = {
     eventName: InPageEventInfor.title,
@@ -26,7 +32,7 @@ const Event_box1 = ({InPageEventInfor = InPageEventInforDefault}:{InPageEventInf
   
 
   return(
-    <div className="group w-[280px] h-[350px]  overflow-hidden rounded-[20px] m-[10px] bg-white transition duration-200 ease-in-out  cursor-pointer hover:shadow-lg">
+    <div className="group w-[280px] h-[350px]  overflow-hidden rounded-[20px] m-[10px] bg-white transition duration-200 ease-in-out  cursor-pointer hover:shadow-lg" onClick={()=>{loadPage(`/Eventdetail_page/${InPageEventInfor.eventId}`)}}>
       <div className="w-[95%] h-[175px] ml-[2.5%] mt-[2.5%] overflow-hidden rounded-[15px]">
         <img src={eventInfor.eventImage} className="mt-[2px] w-full h-full object-cover  transition duration-200 ease-in-out group-hover:scale-105"/> 
       </div>

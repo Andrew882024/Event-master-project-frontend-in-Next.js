@@ -24,7 +24,6 @@ const Events_page = () =>{
           {EventInfoList.map(EventInfo=>{
             return(<Event_box1 InPageEventInfor={EventInfo} key={EventInfo.eventId}/>);
           })}
-          <Event_box1 InPageEventInfor={EventInfoList[1]} />
           <Event_box1 />
           <Event_box1 />
           <Event_box1 />
