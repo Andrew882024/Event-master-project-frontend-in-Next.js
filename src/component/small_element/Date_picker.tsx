@@ -12,7 +12,7 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-type Event_info = { name: string; createdAt: string };
+type Event_info = { name: string; eventDate: string };
 
 
 function Date_and_time_picker() {
@@ -35,7 +35,7 @@ function Date_and_time_picker() {
     }
     const event_info: Event_info = {
       name: "Andrew",
-      createdAt: (value as Date).toISOString(), // UTC ISO 8601
+      eventDate: (value as Date).toISOString(), // UTC ISO 8601
     };
 
     try {
