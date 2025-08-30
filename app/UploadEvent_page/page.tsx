@@ -1,8 +1,19 @@
+"use client";
+import Control_broad from "@/src/component/Control_broad";
+import Date_and_time_picker from "@/src/component/small_element/Date_picker";
+
+
+
 const UploadEvent_page = () =>{
-  return(
-    <div className="abosolute top-0 left-0 w-screen h-screen bg-gray-200">
-      <div className="text-black text-5xl">UploadEvent_page</div>
+  return(<div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-full">
+    <Control_broad/>
+    <title>Upload Event Page</title>
+    <div className="absolute top-[115px] min-h-[1000px] w-full bg-gray-900 flex justify-center ">
+      <Date_and_time_picker/>
     </div>
+    
+  </div>
+
 );
 }
 
