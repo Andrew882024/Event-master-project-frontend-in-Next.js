@@ -12,12 +12,26 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-type Event_info = { name: string; eventDate: string };
+type Creating_Event_info = { 
+  type:string;
+  title:string;
+  provider:string;
+  StartDateAndTime:string;
+  lastingTime:number;
+  location:string;
+  image:string;
+  description:string; 
+  eventDate: string 
+};
 
 
 function Date_and_time_picker() {
   const [value, onChange] = useState<Value>(null);
   
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////// 
   const f = new Intl.DateTimeFormat('en-us', { dateStyle: 'full', timeStyle: 'full' ,hourCycle: 'h23'});
   let isValidDate = value instanceof Date && !isNaN(value.getTime());
     if (isValidDate) {
@@ -25,7 +39,7 @@ function Date_and_time_picker() {
     } else {
       console.log('date is empty or wrong, try again');
     }
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     const handleSubmit = async () => {
@@ -33,8 +47,15 @@ function Date_and_time_picker() {
       console.warn("date is empty or wrong, try again");
       return;
     }
-    const event_info: Event_info = {
-      name: "Andrew",
+    const creating_event_info: Creating_Event_info = {
+      type:"sampleType",
+      title:"sampleTitle",
+      provider:"sampleProvider",
+      StartDateAndTime:"sampleStartDateAndTime",
+      lastingTime:0,
+      location:"samepleLocation",
+      image:"sampleImage",
+      description:"sampleDescription",
       eventDate: (value as Date).toISOString(), // UTC ISO 8601
     };
 
@@ -42,7 +63,7 @@ function Date_and_time_picker() {
       const res = await fetch("http://localhost:8000/test_datetime", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(event_info), // <-- send the payload
+        body: JSON.stringify(creating_event_info), // <-- send the payload
       });
       const data = await res.json();
       console.log("Response from backend:", data);
