@@ -5,9 +5,27 @@ import 'react-clock/dist/Clock.css';
 import { useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
 
+
+// fetch("http://localhost:8000/student", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(value),
+// })
+//   .then((res) => res.json())
+//   .then((data) => {
+//     console.log("Response from backend:", data);
+//   })
+//   .catch((err) => console.error("Error:", err));
+
+
+
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+type Payload = { name: string; createdAt: string };
 
 function Date_and_time_picker() {
   const [value, onChange] = useState<Value>(null);
@@ -19,11 +37,58 @@ function Date_and_time_picker() {
     } else {
       console.log('date is empty or wrong, try again');
     }
+///////////////////////////////////////////////////////////////////////////////////////
 
+
+    const handleSubmit = async () => {
+    if (!isValidDate) {
+      console.warn("date is empty or wrong, try again");
+      return;
+    }
+    const payload: Payload = {
+      name: "Andrew",
+      createdAt: (value as Date).toISOString(), // UTC ISO 8601
+    };
+
+    try {
+      const res = await fetch("http://localhost:8000/test_datetime", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload), // <-- send the payload
+      });
+      const data = await res.json();
+      console.log("Response from backend:", data);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+    console.log(value);
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
   return (
     <div>
       <DateTimePicker onChange={onChange} value={value} className={"text-[20px] w-[400px] h-[50px] bg-white text-black p-[10px]"} minDate={new Date()}/>
       <div className="text-white" >Selected date and time: {value ? value.toString() : 'None'}</div>
+      <button className="bg-blue-500 text-white p-2 rounded mt-2" onClick={() => {
+        handleSubmit();
+        // if (isValidDate) {
+        //   fetch("http://localhost:8000/test_datetime", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(value),
+        //   })
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //       console.log("Response from backend:", data);
+        //     })
+        //     .catch((err) => console.error("Error:", err));}
+      }}>Submit</button>
     </div>
   );
 }
