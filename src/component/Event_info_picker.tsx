@@ -25,7 +25,7 @@ type Creating_Event_info = {
 };
 
 
-function Date_and_time_picker() {
+function Event_info_picker() {
   const [value, onChange] = useState<Value>(null);
   
 
@@ -89,4 +89,4 @@ function Date_and_time_picker() {
   );
 }
 
-export default Date_and_time_picker;
+export default Event_info_picker;
