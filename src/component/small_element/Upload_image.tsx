@@ -55,7 +55,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
   formData.append('upload_preset', 'friendsbook');
 
-  const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
+  const cloudinaryUrl = "http://localhost:8000/upload"//process.env.NEXT_PUBLIC_CLOUDINARY_URL;
   if (!cloudinaryUrl) {
     alert('Cloudinary URL is not defined.');
     return;
