@@ -20,11 +20,7 @@ function MyDropzone() {
   setFiles(files => files.filter(file => file.name !== name));
   };
   const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: import('react-dropzone').FileRejection[]) => {
-    // Do something with the files
-    // if (files.length >= 1) {
-    //   alert('You should not upload two images. Please delete the first one before adding another.');
-    //   return;
-    // }
+    
     if (rejectedFiles?.length) {
       setRejected(previousFiles => [...rejectedFiles]);
       alert(rejectedFiles[0].errors[0].message);
@@ -50,12 +46,21 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
   if (!files?.length) return;
 
+  const res = await fetch("http://localhost:8000/upload-url", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ filename: files[0].name, content_type: files[0].type }),
+  });
+
+  const { url, key } = await res.json();
+
+
   const formData = new FormData();
   files.forEach(file => formData.append('file', file));
 
   formData.append('upload_preset', 'friendsbook');
 
-  const cloudinaryUrl = "http://localhost:8000/upload"//process.env.NEXT_PUBLIC_CLOUDINARY_URL;
+  const cloudinaryUrl = url //"http://localhost:8000/upload"//process.env.NEXT_PUBLIC_CLOUDINARY_URL;
   if (!cloudinaryUrl) {
     alert('Cloudinary URL is not defined.');
     return;
@@ -67,6 +72,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
   console.log(data);
 };
+
 
   return (
     <form onSubmit={handleSubmit}>
