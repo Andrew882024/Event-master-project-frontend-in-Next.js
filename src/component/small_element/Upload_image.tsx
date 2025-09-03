@@ -43,7 +43,6 @@ function MyDropzone() {
 
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
-
   if (!files?.length) return;
 
   const res = await fetch("http://localhost:8000/upload-url", {
@@ -52,11 +51,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     body: JSON.stringify({ filename: files[0].name, content_type: files[0].type }),
   });
 
-  const { url, key } = await res.json();
-
+  const { url, fields } = await res.json();
 
   const formData = new FormData();
-  files.forEach(file => formData.append('file', file));
+  //files.forEach(file => formData.append('file', file));
+  const file = files[0];
+  Object.entries(fields).forEach(([k, v]) => formData.append(k, v as string)); // adds 'key'
+  formData.append("file", file);
 
   formData.append('upload_preset', 'friendsbook');
 
@@ -68,7 +69,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   const data = await fetch(cloudinaryUrl, {
     method: 'POST',
     body: formData
-  }).then(res => res.json());
+   })//.then(res => res.json());
 
   console.log(data);
 };
