@@ -21,7 +21,6 @@ type Creating_Event_info = {
   location:string;
   image:string;
   description:string; 
-  eventDate: string 
 };
 
 
@@ -51,12 +50,11 @@ function Event_info_picker() {
       type:"sampleType",
       title:"sampleTitle",
       provider:"sampleProvider",
-      StartDateAndTime:"sampleStartDateAndTime",
+      StartDateAndTime:(value as Date).toISOString(), // UTC ISO 8601
       lastingTime:0,
       location:"samepleLocation",
       image:"sampleImage",
       description:"sampleDescription",
-      eventDate: (value as Date).toISOString(), // UTC ISO 8601
     };
 
     try {
