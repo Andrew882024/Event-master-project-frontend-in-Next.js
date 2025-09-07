@@ -72,14 +72,14 @@ function Event_info_picker() {
 
     console.log(value);
 
-
+  
 
 
 ////////////////////////////////////////////////////////////////////////////////
   return (
     <div>
-      <DateTimePicker onChange={onChange} value={value} className={"text-[20px] w-[400px] h-[50px] bg-white text-black p-[10px]"} minDate={new Date()}/>
-      <div className="text-white" >Selected date and time: {value ? value.toString() : 'None'}</div>
+      <DateTimePicker onChange={onChange} value={value} className={"text-[20px] w-[500px] h-[40px] bg-gray-200 text-black"}  minDate={new Date()} />
+      <div className="text-black" >Selected date and time: {value ? value.toString() : 'None'}</div>
       <button className="bg-blue-500 text-white p-2 rounded mt-2" onClick={() => {
         handleSubmit();
       }}>Submit</button>
