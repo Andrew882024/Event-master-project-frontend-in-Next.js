@@ -105,8 +105,7 @@ const UploadEvent_page = () =>{
   
   });// 5MB
   
-  const handleImageSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
-    e?.preventDefault();
+  const handleImageSubmit = async () => {
     if (!files?.length) return;
   
     const res = await fetch("http://localhost:8000/upload-url", {
@@ -169,7 +168,6 @@ const UploadEvent_page = () =>{
               ))}
             </ul>
             <button type="submit" className='border-[2px] border-black rounded-[10px] text-[18px] text-gray-700 hover:shadow-lg cursor-pointer '>Upload</button>
-            
           </form>
     </div>
 
