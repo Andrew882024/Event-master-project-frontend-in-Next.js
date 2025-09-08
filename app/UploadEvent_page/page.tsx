@@ -26,39 +26,50 @@ type Creating_Event_info = {
   location:string;
   image:string;
   description:string; 
+  totalTicketNumber:number;
 };
 
 
 
 const UploadEvent_page = () =>{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                       Event_info_picker                                          
+//                                        event info small                                         
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+const [event_type, set_event_type] = useState<String>("empty");
+const [event_title, set_event_title] = useState<String>("empty");
+const [event_provider_name, set_event_provider_name] = useState<String>("empty");
+const [event_lasting_time_in_minutes, set_event_lasting_time_in_minutes] = useState<number>(0);
+const [event_location, set_event_location] = useState<String>("empty");
+const [event_description, set_event_description] = useState<String>("empty");
+const [event_total_ticket_number, set_event_total_ticket_number] = useState<number>(0);
+
+//tool
+const [description_word_count,set_description_word_count] = useState<number>(0);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                       Event_date_and_time_picker                                          
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     const [value, onChange] = useState<Value>(null);
   
     const f = new Intl.DateTimeFormat('en-us', { dateStyle: 'full', timeStyle: 'full' ,hourCycle: 'h23'});
     let isValidDate = value instanceof Date && !isNaN(value.getTime());
-      if (isValidDate) {
-        console.log(f.format(value as Date));
-      } else {
-        console.log('date is empty or wrong, try again');
-      }
-  
-  
+
       const handleSubmitDate = async () => {
       if (!isValidDate) {
         console.warn("date is empty or wrong, try again");
+        alert('date is empty or wrong, try again');
         return;
       }
       const creating_event_info: Creating_Event_info = {
-        type:"sampleType",
-        title:"sampleTitle",
-        provider:"sampleProvider",
+        type:event_type as string,
+        title:event_title as string,
+        provider:event_provider_name as string,
         StartDateAndTime:(value as Date).toISOString(), // UTC ISO 8601
-        lastingTime:0,
-        location:"samepleLocation",
-        image:"sampleImage",
-        description:"sampleDescription",
+        lastingTime:event_lasting_time_in_minutes as number,
+        location:event_location as string,
+        image:"sampleImage have problem",
+        description:event_description as string,
+        totalTicketNumber:event_total_ticket_number as number,
       };
   
       try {
@@ -74,9 +85,9 @@ const UploadEvent_page = () =>{
       }
     };
   
-      console.log(value);
+      //console.log(value);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                       Event_info_picker                                          
+//                                       Event_image_picker                                          
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     const [files, setFiles] = useState<(File & { preview: string })[]>([]);
     const [rejected, setRejected] = useState<import('react-dropzone').FileRejection[]>([])
@@ -138,6 +149,9 @@ const UploadEvent_page = () =>{
   };
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                         return                                          
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   return(<div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-full">
@@ -148,11 +162,12 @@ const UploadEvent_page = () =>{
       <div className=" text-[30px] text-gray-900 font-Nunito mt-[10px] mb-[20px] ml-[]">Create New Event</div>
       </div>
       <div className="flex justify-center">
-      <div className="w-[800px] bg-gray-200 rounded-[20px] min-h-[800px] box-border shadow-lg">
-        <div className='text-[30px] text-blue-600 mt-[20px] mb-[5px] ml-[30px]'>Upload image</div>
-        <div className="ml-[30px]">
-          
-          <form onSubmit={handleImageSubmit}>
+      <div className="w-[800px] bg-gray-200 rounded-[20px] min-h-[800px] mb-[100px] box-border shadow-lg">
+
+{/*//////////////////////////////////////////////////// image picker ///////////////////////////////////////////////////////*/}
+        <div className='text-[25px] text-blue-600 mt-[20px] mb-[5px] ml-[30px]'>Upload image</div>
+        <div className="ml-[30px]"> 
+          <form>
             <div {...getRootProps({className:"w-[740px] h-[180px] border-[2px] border-dashed border-gray-300 bg-gray-100 flex flex-col items-center justify-center cursor-pointer shadow-lg rounded-[10px]"})}>
               <input {...getInputProps()} />
               {
@@ -167,28 +182,111 @@ const UploadEvent_page = () =>{
                 <li key={file.name + file.preview}> <img src={file.preview} alt="" className='w-[100px] h-[100px] object-contain inline-block'/>{file.name} {<button className='text-[20px] text-gray-700 border-2 border-black cursor-pointer' onClick={()=>removeFile(file.name)}>remove image</button>}</li>         
               ))}
             </ul>
-            <button type="submit" className='border-[2px] border-black rounded-[10px] text-[18px] text-gray-700 hover:shadow-lg cursor-pointer '>Upload</button>
           </form>
-    </div>
-
-
-        <div className="text-[20px] text-gray-900 font-Nunito mt-[0px] mb-[5px] ml-[30px]">Event Date and Time:</div>
-        <div className="ml-[30px] ">
-          <div>
-                <DateTimePicker onChange={onChange} value={value} className={"text-[20px] w-[500px] h-[40px] bg-gray-200 text-black"}  minDate={new Date()} />
-                <div className="text-black" >Selected date and time: {value ? value.toString() : 'None'}</div>
-                
-              </div>
         </div>
+{/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+
+{/*//////////////////////////////////////////////////// event info small 1 ///////////////////////////////////////////////////////*/}
+<div>
+    <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Title:</div>
+    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+      onChange={(e) => set_event_title(e.target.value)} placeholder="please enter your event title"/>
+</div>
+<div>
+    <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Type:</div>
+    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+      onChange={(e) => set_event_type(e.target.value)} placeholder="please enter your event type"/>
+</div>
+<div>
+    <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Provider's Name:</div>
+    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+      onChange={(e) => set_event_provider_name(e.target.value)} placeholder="please enter event provider's name"/>
+</div>
+<div>
+    <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Location:</div>
+    <input type="text" className="ml-[40px] w-[700px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+      onChange={(e) => set_event_location(e.target.value)} placeholder="please enter event location"/>
+</div>
+
+
+{/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+
+{/*////////////////////////////////////////////////////// Date picker //////////////////////////////////////////////////////////*/}
+      <div className="flex mt-[10px]">
+        <div>
+          <div className="text-[20px] text-gray-900 font-Nunito mt-[0px] mb-[5px] ml-[30px]">Start Date and Time:</div>
+          <div className="ml-[30px] ">
+            <div>
+              <DateTimePicker onChange={onChange} value={value} className={"text-[20px] w-[400px] ml-[10px] h-[40px] bg-gray-200 text-black "}  minDate={new Date()} />
+              <div className="text-black" >Selected date and time: {value ? value.toString() : 'None'}</div>                
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className='text-[20px] text-gray-900 mt-[0px] mb-[5px] ml-[30px]'>Lasting Time In Minutes:</div>
+          <input type="number" className="ml-[40px] w-[100px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-[1px] rounded-[15px] border-gray-900 focus:border-blue-600" 
+            onChange={(e) => set_event_lasting_time_in_minutes(Number(e.target.value))} placeholder="0"/>
+        </div>
+      </div>
+{/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+
+{/*//////////////////////////////////////////////////// event info small 2 ///////////////////////////////////////////////////////*/}
+<div>
+    <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Total Ticket Number:</div>
+    <input type="number" className="ml-[40px] w-[100px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-[1px] rounded-[15px] border-gray-900 focus:border-blue-600" 
+      onChange={(e) => set_event_total_ticket_number(Number(e.target.value))} placeholder="0"/>
+</div>
+
+<div>
+    <div className='text-[20px] text-gray-900 mt-[15px] mb-[5px] ml-[30px]'>Description:</div>
+    <textarea className="ml-[40px] w-[700px] min-h-[100px] mb-[5px] bg-gray-200 text-black text-[15px] p-[15px] outline-none border-[2px] pb-[30px] border-gray-900 rounded-[15px] focus:border-blue-600" 
+      onChange={(e) => {
+        set_event_description(e.target.value);
+        set_description_word_count(e.target.value.length);
+      }} placeholder="please enter event description (no more than 10000 character)"/>
+    <div className={`text-[15px] mr-[80px] mt-[-40px] mb-[0px] flex justify-end ${description_word_count>10000?"text-red-600":"text-gray-500"}`}>
+      <div>{`${description_word_count}/10000`}</div>
+    </div>
+</div>
+
+{/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+
+{/*//////////////////////////////////////////////////// submit button //////////////////////////////////////////////////////////*/}
         <button
-          type="button" className="bg-blue-500 text-white p-2 rounded mt-2"
+          type="button" className="bg-blue-600 text-white p-2 rounded mt-[30px] ml-[30px] mb-[100px] w-[100px] shadow-lg hover:bg-blue-700 transition-colors duration-[500ms] cursor-pointer"
           onClick={async () => {
-            await handleImageSubmit();  
-            await handleSubmitDate();   
+
+            if(event_type==="empty"||event_title==="empty"||event_provider_name==="empty"||event_location==="empty"||event_description==="empty"){
+              alert("some event info is empty, please check again");
+              return;
+            }
+            else if(event_lasting_time_in_minutes<=0||event_total_ticket_number<=0){
+              alert("event lasting time and event total ticket number cannot be less or equal to 0")
+              return;
+            }
+            else if(description_word_count>10000){
+              alert("description should have no more than 10000 character")
+              return;
+            }
+            else if(files.length <= 0){
+              alert("you need to upload a image")
+              return;
+            }
+            try{
+              await handleImageSubmit();  
+              await handleSubmitDate();   
+            }
+            catch{
+              alert("submition failed, something is wrong");
+            }
+
+            alert("submition succeed");
           }}
         >
-          Submit All
+          Submit
         </button>
+{/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
       </div>
       </div>
     </div>
