@@ -219,8 +219,8 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
               <input {...getInputProps()} />
               {
                 isDragActive ?
-                  <p className='text-[20px] text-gray-700'>Drop the files here ...</p> :
-                  <p className='text-[20px] text-gray-700'>Drag 'n' drop some files here, or click to select files</p>
+                  <p className='text-[20px] text-gray-700'>Drop the image here ...</p> :
+                  <p className='text-[20px] text-gray-700'>Drag image here, or click to select image</p>
               }
             </div>
             {/* Preview */}
@@ -301,7 +301,7 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
 
 {/*//////////////////////////////////////////////////// submit button //////////////////////////////////////////////////////////*/}
         <button
-          type="button" className="bg-blue-600 text-white p-2 rounded mt-[30px] ml-[30px] mb-[100px] w-[100px] shadow-lg hover:bg-blue-700 transition-colors duration-[500ms] cursor-pointer"
+          type="button" className="bg-blue-600 text-white p-2 rounded mt-[30px] ml-[30px] mb-[100px] w-[100px] shadow-lg hover:bg-blue-700 transition-colors duration-[300ms] cursor-pointer"
           onClick={async () => {
 
             if(event_type==="empty"||event_title==="empty"||event_provider_name==="empty"||event_location==="empty"||event_description==="empty"){
@@ -333,19 +333,13 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
         >
           Submit
         </button>
-        <button onClick={()=>{
-          console.log(preview_event_info);
-          } } className="text-black">test</button>
-
-          <div className="mt-6">
         <button
           type="button" // important if inside a <form>
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300"
+          className="bg-blue-600 text-white ml-[520px] px-4 py-2 rounded cursor-pointer w-[100px] hover:bg-blue-700 shadow-lg transition-colors duration-[300ms]"
           onClick={() => setShowPreview(true)}
         >
           Preview
         </button>
-      </div>
 
       {showPreview && (
         <FullScreenPreview event={preview_event_info} onClose={() => setShowPreview(false)} />
