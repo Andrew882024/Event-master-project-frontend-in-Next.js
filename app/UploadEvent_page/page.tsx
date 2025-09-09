@@ -13,6 +13,10 @@ import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 //import { useState } from 'react';
 
+import { EventInfo } from "@/src/data/sampleData";
+import {Preview_eventdetail_page} from "../../src/component/big_component/Preview_detail_page";
+import { FullScreenPreview } from "@/src/component/big_component/FullScreenPreview";
+
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -147,6 +151,49 @@ const [description_word_count,set_description_word_count] = useState<number>(0);
   
     console.log(data);
   };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                         preview                                          
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// export type EventInfo = {
+//   eventId: string;
+//   type: string;
+//   title: string;
+//   provider: string;
+//   dayOfMonth: string;
+//   month: string;
+//   dayOfWeek: string;
+//   date: string;
+//   startTime: string;
+//   time: string;
+//   location: string;
+//   imageUrl: string;
+//   description: string;
+//   totalTicketNumber?: number;
+//   remainingTicketNumber?: number;
+// };
+
+const preview_event_info: EventInfo = {
+  eventId: "sampleEventId",
+  type: event_type as string,
+  title: event_title as string,
+  provider: event_provider_name as string,
+  dayOfMonth: isValidDate ? (value as Date).getDate().toString() : "DD",
+  month: isValidDate ? (value as Date).toLocaleString('en-US', { month: 'short' }).toUpperCase() : "MMM",
+  dayOfWeek: isValidDate ? (value as Date).toLocaleString('en-US', { weekday: 'short' }).toUpperCase() : "DDD",
+  date: isValidDate ? new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(value as Date) : "Date",
+  startTime: isValidDate ? (value as Date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }) : "HH:MM",
+  time: isValidDate ? `${(value as Date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}-${new Date((value as Date).getTime() + event_lasting_time_in_minutes * 60_000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}` : "HH:MM",
+  location: event_location as string,
+  imageUrl: files.length > 0 ? files[0].preview : "https://via.placeholder.com/150",
+  description: event_description as string,
+  totalTicketNumber: event_total_ticket_number as number,
+  remainingTicketNumber: event_total_ticket_number as number,
+}
+
+const [showPreview, setShowPreview] = useState<Boolean>(false);
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,6 +333,23 @@ const [description_word_count,set_description_word_count] = useState<number>(0);
         >
           Submit
         </button>
+        <button onClick={()=>{
+          console.log(preview_event_info);
+          } } className="text-black">test</button>
+
+          <div className="mt-6">
+        <button
+          type="button" // important if inside a <form>
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300"
+          onClick={() => setShowPreview(true)}
+        >
+          Preview
+        </button>
+      </div>
+
+      {showPreview && (
+        <FullScreenPreview event={preview_event_info} onClose={() => setShowPreview(false)} />
+      )}
 {/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
       </div>
       </div>
@@ -298,3 +362,5 @@ const [description_word_count,set_description_word_count] = useState<number>(0);
 }
 
 export default UploadEvent_page;
+
+
