@@ -49,6 +49,8 @@ const [event_total_ticket_number, set_event_total_ticket_number] = useState<numb
 
 //tool
 const [description_word_count,set_description_word_count] = useState<number>(0);
+//image uuid
+const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useState<String>("empty");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                       Event_date_and_time_picker                                          
@@ -71,7 +73,7 @@ const [description_word_count,set_description_word_count] = useState<number>(0);
         StartDateAndTime:(value as Date).toISOString(), // UTC ISO 8601
         lastingTime:event_lasting_time_in_minutes as number,
         location:event_location as string,
-        image:"sampleImage have problem",
+        image: event_image_uuid_from_backend as string,
         description:event_description as string,
         totalTicketNumber:event_total_ticket_number as number,
       };
@@ -86,6 +88,7 @@ const [description_word_count,set_description_word_count] = useState<number>(0);
         console.log("Response from backend:", data);
       } catch (err) {
         console.error("Error:", err);
+        throw err;
       }
     };
   
@@ -128,8 +131,11 @@ const [description_word_count,set_description_word_count] = useState<number>(0);
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ filename: files[0].name, content_type: files[0].type }),
     });
-  
+
     const { url, fields } = await res.json();
+
+    set_event_image_uuid_from_backend(fields.key);
+    
   
     const formData = new FormData();
     //files.forEach(file => formData.append('file', file));
@@ -148,8 +154,12 @@ const [description_word_count,set_description_word_count] = useState<number>(0);
       method: 'POST',
       body: formData
      })//.then(res => res.json());
-  
-    console.log(data);
+    if (data.status !== 204) {
+      alert('Uploading image failed.');
+      throw new Error('Uploading image failed.');
+    }
+
+    console.log(data.status);
   };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,6 +332,7 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
             }
             try{
               await handleImageSubmit();  
+              console.log("test:"+event_image_uuid_from_backend);
               await handleSubmitDate();   
             }
             catch{
@@ -335,7 +346,7 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
         </button>
         <button
           type="button" // important if inside a <form>
-          className="bg-blue-600 text-white ml-[520px] px-4 py-2 rounded cursor-pointer w-[100px] hover:bg-blue-700 shadow-lg transition-colors duration-[300ms]"
+          className="bg-blue-600 text-white ml-[520px] px-4 py-2 rounded cursor-pointer w-[100px] hover:bg-blue-700 shadow-lg  transition-colors duration-[300ms]"
           onClick={() => setShowPreview(true)}
         >
           Preview
