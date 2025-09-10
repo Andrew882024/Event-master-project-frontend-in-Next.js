@@ -337,6 +337,7 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
             }
             catch{
               alert("submition failed, something is wrong");
+              return;
             }
 
             alert("submition succeed");
