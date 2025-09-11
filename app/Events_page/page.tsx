@@ -1,8 +1,27 @@
+"use client"
+import { useQuery } from "@tanstack/react-query";
 import Control_broad from "../../src/component/Control_broad";
 import Event_box1 from "../../src/component/small_element/Event_box1";
 import {EventInfo, EventInfoList} from "@/src/data/sampleData";
+import { EventInfoFromDB } from "@/src/data/dataFromDB";
 
 const Events_page = () =>{
+
+  const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
+    queryKey: ['EventInfoFromDB'],
+    queryFn: async () => {const res = await fetch('http://localhost:8000/a_page_of_events');
+    return (await res.json()) as EventInfoFromDB[];},
+    staleTime: 60 * 60 * 1000, // 1 hour
+    refetchInterval: 60 * 60 * 1000, // 1 hour
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {(error as Error).message}</div>;
+  }
 
   console.log(EventInfoList[1]);
   
@@ -21,9 +40,10 @@ const Events_page = () =>{
       <div className="  m-[10px]">
         <div className="text-[15px] text-gray-500 ">Event in this week:</div>
         <div className=" flex flex-wrap">
-          {EventInfoList.map(EventInfo=>{
+          {/* {EventInfoList.map(EventInfo=>{
             return(<Event_box1 InPageEventInfor={EventInfo} key={EventInfo.eventId}/>);
-          })}
+          })} */}
+          {data?.map((post) => (<div key = {post.id} className="text-black">{post.id}</div>) )}
           <Event_box1 />
           <Event_box1 />
           <Event_box1 />
