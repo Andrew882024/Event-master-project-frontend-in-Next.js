@@ -24,14 +24,14 @@ const HTTP_LINK = process.env.NEXT_PUBLIC_API_BASE || "http://18.223.126.55:8000
 
 export default function SignIn_page() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [busy, setBusy] = useState(false);
 
   async function handleSignIn() {
-    if (!username.trim()) {
-      alert("username can not be empty, please enter your username");
+    if (!email.trim()) {
+      alert("email can not be empty, please enter your email");
       return;
     }
     if (!password.trim()) {
@@ -42,12 +42,12 @@ export default function SignIn_page() {
     try {
       setBusy(true);
 
-      // 1) Check username exists
-      const existRes = await fetch(`${HTTP_LINK}/username_check_if_exist/${encodeURIComponent(username)}`);
+      // 1) Check email exists
+      const existRes = await fetch(`${HTTP_LINK}/email_check_if_exist/${encodeURIComponent(email)}`);
       const existText = await existRes.json();
 
       if (existText === "not_exist") {
-        alert("this username does not exist, try other username");
+        alert("this email does not exist, try again or sign up first");
         return;
       }
       if (existText !== "exist") {
@@ -57,16 +57,16 @@ export default function SignIn_page() {
 
       // 2) Check password match
       const matchRes = await fetch(
-        `${HTTP_LINK}/check_whether_username_and_password_match/${encodeURIComponent(username)}/${encodeURIComponent(password)}`
+        `${HTTP_LINK}/check_whether_email_and_password_match/${encodeURIComponent(email)}/${encodeURIComponent(password)}`
       );
       const matchText = await matchRes.json();
 
-      if (matchText === "username_and_password_match") {
-        alert("username and password match, you are signed in");
+      if (matchText === "email_and_password_match") {
+        alert("email and password match, you are signed in");
         // Replace with your real post‑login route/page
         router.push("/you-are-signed-in");
-      } else if (matchText === "username_and_password_does_not_match") {
-        alert("username and password does not match, try again");
+      } else if (matchText === "email_and_password_does_not_match") {
+        alert("email and password does not match, try again");
       } else {
         alert("there is an error");
       }
@@ -94,20 +94,20 @@ export default function SignIn_page() {
       {/* Sign-in section */}
       <section className="flex h-[70vh] w-full items-center justify-center">
         <div className="inline-block w-[400px] rounded-xl border-8 border-white bg-white p-4 shadow-lg">
-          {/* Username & Password */}
+          {/* Email & Password */}
           <div className="w-full bg-white">
-            <label className="mb-1 block text-[16px] text-[#666]">Username</label>
+            <label className="mb-1 block text-[16px] text-[#666]">Email</label>
             <input
-              className="mb-2 w-[95%] border-b-2 border-[#666] text-[16px] outline-none focus:border-blue-600"
-              id="InputUsername"
+              className="mb-2 w-[95%] border-b-2 border-[#666] text-gray-800 text-[16px] outline-none focus:border-blue-600"
+              id="InputEmail"
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <label className="mb-1 mt-2 block text-[16px] text-[#666]">Password</label>
             <input
-              className="mb-1 w-[95%] border-b-2 border-[#666] text-[16px] outline-none focus:border-blue-600"
+              className="mb-1 w-[95%] border-b-2 border-[#666] text-gray-800 text-[16px] outline-none focus:border-blue-600"
               id="InputPassword"
               type="password"
               value={password}
@@ -143,7 +143,7 @@ export default function SignIn_page() {
 
           {/* Links */}
           <div className="mt-5">
-            <a href="#" className="text-[#005bb5]">Forgot username/password?</a>
+            <a href="#" className="text-[#005bb5]">Forgot password?</a>
             <br />
             <a href="/SignUp_page" className="text-[#005bb5]">New here? Sign up now.</a>
           </div>

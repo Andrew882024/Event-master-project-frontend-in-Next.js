@@ -24,19 +24,13 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://18.223.126.55:8000"
 
 export default function SignUp_page() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
   const [busy, setBusy] = useState(false);
 
   function validateInputs() {
-    if (username.length < 5 || username.length > 20) {
-      alert("invalid username, your username length should be bigger than 5 and smaller than 20");
-      return false;
-    }
-    if (username.includes(" ")) {
-      alert("invalid username, your username should not include space in it");
-      return false;
-    }
     if (!/[0-9]/.test(password)) {
       alert("invalid password, your password should have at least one number");
       return false;
@@ -54,14 +48,14 @@ export default function SignUp_page() {
     try {
       setBusy(true);
 
-      // 1) Check whether username exists
+      // 1) Check whether email exists
       const existRes = await fetch(
-        `${API_BASE}/username_check_if_exist/${encodeURIComponent(username)}`
+        `${API_BASE}/email_check_if_exist/${encodeURIComponent(email)}`
       );
       const existStatus = await existRes.json();
 
       if (existStatus === "exist") {
-        alert("the username already exist, try something else");
+        alert("the email already exist, try something else");
         return;
       }
       if (existStatus !== "not_exist") {
@@ -70,10 +64,10 @@ export default function SignUp_page() {
       }
 
       // 2) Create user
-      const createRes = await fetch(`${API_BASE}/get_username_and_password`, {
+      const createRes = await fetch(`${API_BASE}/get_email_and_password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!createRes.ok) {
@@ -105,24 +99,40 @@ export default function SignUp_page() {
       {/* Sign-up section */}
       <section className="flex min-h-[70vh] w-full items-center justify-center">
         <div className="inline-block w-[400px] rounded-xl border-8 border-white bg-white p-4 shadow-lg">
-          {/* Username & Password */}
+          {/* Email & Password */}
           <div className="w-full bg-white">
-            <label className="mb-1 block text-[16px] text-[#666]">Username</label>
+            <label className="mb-1 block text-[16px] text-[#666]">Email</label>
             <input
-              className="mb-2 w-[95%] border-b-2 border-[#666] text-[16px] outline-none focus:border-blue-600"
+              className="mb-2 w-[95%] border-b-2 border-[#666]  text-gray-800 text-[16px] outline-none focus:border-blue-600"
               id="user_name_id"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <label className="mb-1 mt-2 block text-[16px] text-[#666]">Password</label>
+            <input
+              className="mb-1 w-[95%] border-b-2 border-[#666] text-gray-800 text-[16px] outline-none focus:border-blue-600"
+              id="password_id"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <label className="mb-1 mt-2 block text-[16px] text-[#666]">Username</label>
+            <input
+              className="mb-1 w-[95%] border-b-2 border-[#666] text-gray-800 text-[16px] outline-none focus:border-blue-600"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
 
-            <label className="mb-1 mt-2 block text-[16px] text-[#666]">Password</label>
+            <label className="mb-1 mt-2 block text-[16px] text-[#666]">Verification code</label>
             <input
-              className="mb-1 w-[95%] border-b-2 border-[#666] text-[16px] outline-none focus:border-blue-600"
-              id="password_id"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              className="mb-1 w-[95%] border-b-2 border-[#666] text-gray-800 text-[16px] outline-none focus:border-blue-600"
+              type="text"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
             />
           </div>
 
