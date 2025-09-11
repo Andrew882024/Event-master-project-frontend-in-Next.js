@@ -1,14 +1,56 @@
-import Eventdetail_page from "../page";
-import { EventInfo, EventInfoList } from "../../../src/data/sampleData";
+// "use client";
+// import Eventdetail_page from "../page";
+// import { EventInfo, EventInfoList } from "../../../src/data/sampleData";
+// import { EventInfoFromDB, fetchEventInfoFromDB } from "@/src/data/dataFromDB";
+// import { useQuery } from "@tanstack/react-query";
 
-const Eventdetail_for_each_one = async ({ params }: { params: Promise<{ eventId: string }> }) => {
-  const wating = await params;
-  const eventId = (await params).eventId;
-  const index: number = EventInfoList.findIndex(event => event.eventId === eventId);
-  if (index === -1) {
-    return <div>Event not found</div>;
-  }
-  return <Eventdetail_page eventInfor={EventInfoList[index]}/>;
-};
+// const Eventdetail_for_each_one = async ({ params }: { params: Promise<{ eventId: string }> }) => {
+//   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
+//     queryKey: ['EventInfoFromDB'],
+//     queryFn: fetchEventInfoFromDB,
+//     staleTime: 60 * 60 * 1000, // 1 hour
+//     refetchInterval: 60 * 60 * 1000, // 1 hour
+//   });
 
-export default Eventdetail_for_each_one;
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (isError) {
+//     return <div>Error: {(error as Error).message}</div>;
+//   }
+
+
+//   const wating = await params;
+//   const eventId = (await params).eventId;
+//   const index: number = data?.findIndex(event => event.id === eventId);
+//   if (index === -1) {
+//     return <div>Event not found</div>;
+//   }
+//   return <Eventdetail_page eventInfor={data[index]}/>;
+// };
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { fetchEventInfoFromDB, type EventInfoFromDB } from "@/src/data/dataFromDB";
+import Eventdetail_page from "../page"; // wherever your detail UI lives
+
+export default function Eventdetail_for_each_one({ params }: { params: { eventId: string } }) {
+  const { data = [], isLoading, isError, error } = useQuery<EventInfoFromDB[]>({
+    queryKey: ["events"],
+    queryFn: fetchEventInfoFromDB,
+    staleTime: 60 * 60 * 1000,       // 1h fresh
+    // refetchInterval: 60 * 60 * 1000, // optional polling
+  });
+
+  if (isLoading && data.length === 0) return <div>Loading…</div>;
+  if (isError) return <div>Error: {(error as Error).message}</div>;
+
+  // id might be number in DB, compare as string to be safe
+  const event = data.find(e => String(e.id) === params.eventId);
+  if (!event) return <div>Event not found</div>;
+
+  return <Eventdetail_page eventInfor={event} />;
+}
+
+//export default Eventdetail_for_each_one;
