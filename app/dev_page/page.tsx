@@ -6,19 +6,17 @@ import Test_download_image from "@/src/component/small_element/Test_download_ima
 import Load_image from "@/src/component/small_element/Load_image";
 import { useQuery, useMutation} from "@tanstack/react-query";
 import { EventInfoFromDB } from "@/src/data/dataFromDB";
+import { fetchEventInfoFromDB } from "@/src/data/dataFromDB";
 
 
 
-async function fetchEventInfoFromDB(): Promise<EventInfoFromDB[]> {
-    const res = await fetch('http://localhost:8000/a_page_of_events');
-    return res.json();
-}
+
+
 
 const Dev = () =>{
   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
     queryKey: ['EventInfoFromDB'],
-    queryFn: async () => {const res = await fetch('http://localhost:8000/a_page_of_events');
-    return (await res.json()) as EventInfoFromDB[];},
+    queryFn: fetchEventInfoFromDB,
     staleTime: 60 * 60 * 1000, // 1 hour
     refetchInterval: 60 * 60 * 1000, // 1 hour
   });

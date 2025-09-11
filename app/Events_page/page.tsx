@@ -4,13 +4,14 @@ import Control_broad from "../../src/component/Control_broad";
 import Event_box1 from "../../src/component/small_element/Event_box1";
 import {EventInfo, EventInfoList} from "@/src/data/sampleData";
 import { EventInfoFromDB } from "@/src/data/dataFromDB";
+import Event_box1_db from "@/src/component/small_element/Event_box1_db";
+import { fetchEventInfoFromDB } from "@/src/data/dataFromDB";
 
 const Events_page = () =>{
 
   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
     queryKey: ['EventInfoFromDB'],
-    queryFn: async () => {const res = await fetch('http://localhost:8000/a_page_of_events');
-    return (await res.json()) as EventInfoFromDB[];},
+    queryFn: fetchEventInfoFromDB,
     staleTime: 60 * 60 * 1000, // 1 hour
     refetchInterval: 60 * 60 * 1000, // 1 hour
   });
@@ -43,7 +44,11 @@ const Events_page = () =>{
           {/* {EventInfoList.map(EventInfo=>{
             return(<Event_box1 InPageEventInfor={EventInfo} key={EventInfo.eventId}/>);
           })} */}
-          {data?.map((post) => (<div key = {post.id} className="text-black">{post.id}</div>) )}
+          {data?.map((post) => {
+            return(<Event_box1_db InPageEventInfor={post} key={post.id}/>);
+            // <div key = {post.id} className="text-black">{post.id}</div>
+          } )}
+          <Event_box1_db />
           <Event_box1 />
           <Event_box1 />
           <Event_box1 />

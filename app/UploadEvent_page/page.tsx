@@ -60,7 +60,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
     const f = new Intl.DateTimeFormat('en-us', { dateStyle: 'full', timeStyle: 'full' ,hourCycle: 'h23'});
     let isValidDate = value instanceof Date && !isNaN(value.getTime());
 
-      const handleSubmitDate = async () => {
+      const handleSubmitDate = async (imageurl:string) => {
       if (!isValidDate) {
         console.warn("date is empty or wrong, try again");
         alert('date is empty or wrong, try again');
@@ -73,7 +73,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
         StartDateAndTime:(value as Date).toISOString(), // UTC ISO 8601
         lastingTime:event_lasting_time_in_minutes as number,
         location:event_location as string,
-        image: event_image_uuid_from_backend as string,
+        image: imageurl as string,
         description:event_description as string,
         totalTicketNumber:event_total_ticket_number as number,
       };
@@ -135,8 +135,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
     const { url, fields } = await res.json();
 
     set_event_image_uuid_from_backend(fields.key);
-    
-  
+    alert(fields.key+"test1");
     const formData = new FormData();
     //files.forEach(file => formData.append('file', file));
     const file = files[0];
@@ -158,8 +157,9 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       alert('Uploading image failed.');
       throw new Error('Uploading image failed.');
     }
-
+    
     console.log(data.status);
+    return fields.key;
   };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -331,9 +331,10 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
               return;
             }
             try{
-              await handleImageSubmit();  
+              const imageurlholder = await handleImageSubmit();  
               console.log("test:"+event_image_uuid_from_backend);
-              await handleSubmitDate();   
+              alert("test2:"+imageurlholder);
+              await handleSubmitDate(imageurlholder as string);   
             }
             catch{
               alert("submition failed, something is wrong");
