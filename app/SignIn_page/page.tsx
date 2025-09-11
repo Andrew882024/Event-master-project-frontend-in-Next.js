@@ -83,6 +83,9 @@ export default function SignIn_page() {
       className="min-h-screen w-full bg-cover bg-center"
       style={{ backgroundImage: `url(${BG_IMAGE})` }}
     >
+      <div className="absolute left-[10px] top-[10px] w-[150px] h-[40px] shadow-lg flex items-center justify-center text-gray-50 bg-blue-600 rounded-[5px] hover:bg-blue-700 transform duration-150 cursor-pointer" onClick={() => router.push("/")}>
+        Go Back
+      </div>
       {/* Title */}
       <div className="flex h-24 w-full items-center justify-center">
         <h1 className="text-3xl font-bold tracking-widest text-white">Sign In Page</h1>
@@ -142,7 +145,7 @@ export default function SignIn_page() {
           <div className="mt-5">
             <a href="#" className="text-[#005bb5]">Forgot username/password?</a>
             <br />
-            <a href="/sign-up" className="text-[#005bb5]">New here? Sign up now.</a>
+            <a href="/SignUp_page" className="text-[#005bb5]">New here? Sign up now.</a>
           </div>
         </div>
       </section>

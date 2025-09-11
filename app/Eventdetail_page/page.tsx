@@ -1,3 +1,4 @@
+"use client";
 import { EventInfoFromDB, EventInfoFromDBDefault, fetchEventInfoFromDB } from "@/src/data/dataFromDB";
 import Control_broad from "../../src/component/Control_broad";
 import { EventInfo } from "@/src/data/sampleData";
@@ -17,15 +18,6 @@ export const Eventdetail_page = ({eventInfor = EventInfoFromDBDefault}:{eventInf
     staleTime: 60 * 60 * 1000, // 1 hour
     refetchInterval: 60 * 60 * 1000, // 1 hour
   });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {(error as Error).message}</div>;
-  }
-
 
 /////////////////////////////////////////////////Load image from S3//////////////////////////////////////////////////////
 const key = eventInfor.event_imageUrl;

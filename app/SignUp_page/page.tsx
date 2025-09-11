@@ -96,6 +96,7 @@ export default function SignUp_page() {
       className="min-h-screen w-full bg-cover bg-center"
       style={{ backgroundImage: `url(${BG_IMAGE})` }}
     >
+      
       {/* Title */}
       <div className="flex h-24 w-full items-center justify-center">
         <h1 className="text-3xl font-bold tracking-widest text-white">Sign Up Page</h1>
@@ -138,7 +139,7 @@ export default function SignUp_page() {
 
             <a
               id="go_back_id"
-              href="/sign-in"
+              href="/SignIn_page"
               className="mt-3 inline-block text-[#005bb5]"
             >
               go back
