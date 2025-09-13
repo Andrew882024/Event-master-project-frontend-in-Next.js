@@ -80,6 +80,22 @@ async function sendSignUpInfo(){
     alert("the verification code is incorrect, please try again");
     return;
   }
+  if(output.status === "emailAlreadyExists"){
+    alert("this email already exists, try signing in or use another email to sign up");
+    return;
+  }
+  if(output.status === "signUpFailed"){
+    alert("there is an error, signUpFailed , please try again");
+    return;
+  }
+  if(output.status === "emailAlreadyExists"){
+    alert("this email already exists, try signing in or use another email to sign up");
+    return;
+  }
+  if(output.status === "usernameAlreadyExists"){
+    alert("this username already exists, try using another username");
+    return;
+  }
   if(output.status === "SuccessfullySignedUp"){
     alert("you are signed up (Functionality not implemented)");
     //router.push("/SignIn_page");
