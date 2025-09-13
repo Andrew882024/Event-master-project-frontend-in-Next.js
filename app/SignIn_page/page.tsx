@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
  * 2) If you prefer an env var, set NEXT_PUBLIC_API_BASE in .env.local and replace HTTP_LINK below.
  */
 const BG_IMAGE = "/UCSD_1.webp"; // place your image at public/img/bg.png
-const HTTP_LINK = process.env.NEXT_PUBLIC_API_BASE || "http://18.223.126.55:8000";
+const HTTP_LINK ="http://127.0.0.1:8000";
 
 export default function SignIn_page() {
   const router = useRouter();
@@ -29,54 +29,48 @@ export default function SignIn_page() {
   const [remember, setRemember] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  async function handleSignIn() {
-    if (!email.trim()) {
-      alert("email can not be empty, please enter your email");
-      return;
-    }
-    if (!password.trim()) {
-      alert("password can not be empty, please enter your password");
-      return;
-    }
-
-    try {
+  const tryToSignIn = async () => {
+    try{
+      if (email === "") {
+        alert("email can not be empty, please enter your email");
+        return;
+      }
+      if (password === "") {
+        alert("password can not be empty, please enter your password");
+        return;
+      }
       setBusy(true);
-
-      // 1) Check email exists
-      const existRes = await fetch(`${HTTP_LINK}/email_check_if_exist/${encodeURIComponent(email)}`);
-      const existText = await existRes.json();
-
-      if (existText === "not_exist") {
-        alert("this email does not exist, try again or sign up first");
+      // send to backend
+      const res = await fetch(`${HTTP_LINK}/signIn/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, passwordPlainText: password }),
+      });
+      const output = await res.json();
+      
+      if (output.status === "emailAndPasswordDoesNotMatch") {
+        alert("emailAndPasswordDoesNotMatch, please try again");
         return;
       }
-      if (existText !== "exist") {
-        alert("there is an error");
+      if (output.status === "SuccessfullySignedIn") {
+        alert("you are signed in (Functionality not implemented)");
+        //router.push("/");
         return;
       }
-
-      // 2) Check password match
-      const matchRes = await fetch(
-        `${HTTP_LINK}/check_whether_email_and_password_match/${encodeURIComponent(email)}/${encodeURIComponent(password)}`
-      );
-      const matchText = await matchRes.json();
-
-      if (matchText === "email_and_password_match") {
-        alert("email and password match, you are signed in");
-        // Replace with your real post‑login route/page
-        router.push("/you-are-signed-in");
-      } else if (matchText === "email_and_password_does_not_match") {
-        alert("email and password does not match, try again");
-      } else {
-        alert("there is an error");
+      if (output.status === "signInFailed") {
+        alert("there is an error, signInFailed , please try again");
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      alert("Network error. Please try again.");
-    } finally {
+    }
+    catch (error) {
+      console.error("Error during sign-in:", error);
+      alert("An error occurred during sign-in. Please try again later.");
+    }
+    finally {
       setBusy(false);
     }
-  }
+  };
+
 
   return (
     <main
@@ -133,7 +127,7 @@ export default function SignIn_page() {
           <div className="mt-4 w-full text-center">
             <button
               id="sign_in_button_button"
-              onClick={handleSignIn}
+              onClick={tryToSignIn}
               disabled={busy}
               className="h-10 w-full rounded-md bg-[#0066cc] text-[15px] font-bold text-white outline-0 focus:outline-dashed focus:outline-2 focus:outline-[#005bb5] disabled:opacity-60 hover:bg-blue-700 cursor-pointer transition duration-150"
             >
