@@ -13,6 +13,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { serverUrl } from "@/src/data/severUrl";
 
 /**
  * Notes:
@@ -30,6 +31,62 @@ export default function SignUp_page() {
   const [verificationCode, setVerificationCode] = useState("");
   const [busy, setBusy] = useState(false);
 
+///////////////////////////////////////////////send email for verification code///////////////////////////////////////////////////////
+async function sendVerificationCode() {
+  const res = await fetch(`${serverUrl}/emailForVerificationCode/`,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "email": email }),
+  })
+  const output = await res.json();
+  console.log(output.ok);
+  if(!(output.ok === "True")){
+    alert("There is an error, please try again");
+    return;
+  }
+  else{
+    alert("A verification code has been sent to your email. Please check your email.");
+    return;
+  }  
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////send signUp info to backend///////////////////////////////////////////////////////
+async function sendSignUpInfo(){
+  if(username === ""){
+    alert("username can not be empty, please enter your username");
+    return;
+  }
+  if(verificationCode === ""){
+    alert("verification code can not be empty, please enter the verification code we sent to your email");
+    return;
+  }
+  if(email === ""){
+    alert("email can not be empty, please enter your email");
+    return;
+  }
+  if(password === ""){
+    alert("password can not be empty, please enter your password");
+    return;
+  }
+  const res = await fetch(`${serverUrl}/signUp`,{
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({"username": username, "email": email,  "verificationCode": verificationCode, "passwordPlainText": password}),
+  })
+  const output = await res.json();
+  if(output.status === "incorrectVerificationCode"){
+    alert("the verification code is incorrect, please try again");
+    return;
+  }
+  if(output.status === "SuccessfullySignedUp"){
+    alert("you are signed up (Functionality not implemented)");
+    //router.push("/SignIn_page");
+    return;
+  }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   function validateInputs() {
     if (!/[0-9]/.test(password)) {
       alert("invalid password, your password should have at least one number");
@@ -40,49 +97,6 @@ export default function SignUp_page() {
       return false;
     }
     return true;
-  }
-
-  async function handleSignUp() {
-    if (!validateInputs()) return;
-
-    try {
-      setBusy(true);
-
-      // 1) Check whether email exists
-      const existRes = await fetch(
-        `${API_BASE}/email_check_if_exist/${encodeURIComponent(email)}`
-      );
-      const existStatus = await existRes.json();
-
-      if (existStatus === "exist") {
-        alert("the email already exist, try something else");
-        return;
-      }
-      if (existStatus !== "not_exist") {
-        alert("there is an error");
-        return;
-      }
-
-      // 2) Create user
-      const createRes = await fetch(`${API_BASE}/get_email_and_password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!createRes.ok) {
-        alert("there is an error");
-        return;
-      }
-
-      alert("you are signed up");
-      router.push("/sign-in");
-    } catch (err) {
-      console.error(err);
-      alert("Network error. Please try again.");
-    } finally {
-      setBusy(false);
-    }
   }
 
   return (
@@ -129,20 +143,46 @@ export default function SignUp_page() {
 
             <label className="mb-1 mt-2 block text-[16px] text-[#666]">Verification code</label>
             <input
-              className="mb-1 w-[95%] border-b-2 border-[#666] text-gray-800 text-[16px] outline-none focus:border-blue-600"
+              className="mb-1 w-[70%] border-b-2 border-[#666] text-gray-800 text-[16px] outline-none focus:border-blue-600"
               type="text"
               value={verificationCode}
               onChange={(e) => setVerificationCode(e.target.value)}
             />
+            <button
+              className="ml-2 w-[25%] h-[35px] bg-blue-600 text-white rounded-[5px] hover:bg-blue-700 cursor-pointer"
+              onClick={() => {
+                if(email === "" ){
+                  alert("please enter a valid email address first");
+                  return;
+                }
+                if(email.indexOf("@") === -1 || email.indexOf(".") === -1 || email.length < 5){
+                  alert("please enter a valid email address first");
+                  return;
+                }
+                else{
+                  try{
+                    sendVerificationCode();
+                  }
+                  catch(err){
+                    console.error(err);
+                    alert("Network error. Please try again.");
+                    return;
+                  }
+                  return;
+                }
+              }}
+            >
+              Send
+            </button>
           </div>
 
           {/* Sign Up Button */}
           <div className="mt-6 w-full text-center">
             <button
               id="sign_in_button_button"
-              onClick={handleSignUp}
+              onClick={sendSignUpInfo}
               disabled={busy}
-              className="h-10 w-full rounded-md bg-[#0066cc] text-[15px] font-bold text-white outline-0 focus:outline-dashed focus:outline-2 focus:outline-[#005bb5] disabled:opacity-60"
+              className="h-10 w-full rounded-md bg-[#0066cc] text-[15px] font-bold text-white outline-0 focus:outline-dashed focus:outline-2 focus:outline-[#005bb5] disabled:opacity-60 hover:bg-blue-700 cursor-pointer transition duration-150"
             >
               {busy ? "Signing Up..." : "Sign Up"}
             </button>

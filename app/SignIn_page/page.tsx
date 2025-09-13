@@ -135,7 +135,7 @@ export default function SignIn_page() {
               id="sign_in_button_button"
               onClick={handleSignIn}
               disabled={busy}
-              className="h-10 w-full rounded-md bg-[#0066cc] text-[15px] font-bold text-white outline-0 focus:outline-dashed focus:outline-2 focus:outline-[#005bb5] disabled:opacity-60"
+              className="h-10 w-full rounded-md bg-[#0066cc] text-[15px] font-bold text-white outline-0 focus:outline-dashed focus:outline-2 focus:outline-[#005bb5] disabled:opacity-60 hover:bg-blue-700 cursor-pointer transition duration-150"
             >
               {busy ? "Signing In..." : "Sign In"}
             </button>
