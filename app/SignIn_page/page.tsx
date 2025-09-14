@@ -61,6 +61,9 @@ export default function SignIn_page() {
         alert("there is an error, signInFailed , please try again");
         return;
       }
+      alert("you are signed in (Functionality not implemented)");
+      console.log(output);
+      return;
     }
     catch (error) {
       console.error("Error during sign-in:", error);
