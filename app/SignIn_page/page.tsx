@@ -63,6 +63,11 @@ export default function SignIn_page() {
       }
       alert("you are signed in (Functionality not implemented)");
       console.log(output);
+      localStorage.setItem("user_id", output.user.id);
+      localStorage.setItem("user_name", output.user.username);
+      localStorage.setItem("user_email", output.user.email);
+      localStorage.setItem("access_token", output.access_token);
+      //console.log("test localStorage username"+localStorage.getItem("user_name"));
       return;
     }
     catch (error) {

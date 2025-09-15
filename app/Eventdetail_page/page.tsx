@@ -107,7 +107,7 @@ const key = eventInfor.event_imageUrl;
               <div className=" w-[100%] ">
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Total seats: ${eventInfor.event_total_ticket_number}`}</div>
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Available seats: ${eventInfor.event_remaining_ticket_number}`}</div>
-                <div className=" w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px]" >Join Event</div>
+                <div className=" w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px]" onClick={()=>alert(`the event id is:${eventInfor.id}`)}>Join Event</div>
               </div>
             </div>
           </div>
