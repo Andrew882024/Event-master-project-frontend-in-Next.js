@@ -51,7 +51,7 @@ const Dev = () =>{
         {/* <div className='text-[30px] text-blue-600'>Testing Query</div>
         {data?.map((post,key) => (<div key = {key} className="text-black">{post.event_imageUrl}</div>) )} */}
         <button className="text-[20px] text-black border-[2px] border-black cursor-pointer hover:shadow-lg" onClick={() => {
-          test_bearer_token();
+          console.log(JSON.parse(localStorage.getItem("JWT_access_token_Info")||"").user.user_id);
         }}>test button</button>
       </div>
     </div>
