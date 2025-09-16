@@ -66,11 +66,13 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
         alert('date is empty or wrong, try again');
         return;
       }
+
+      const localTime = new Date((value as Date).getTime() - 7 * 60 * 60 * 1000); // Convert to UTC by subtracting 7 hours
       const creating_event_info: Creating_Event_info = {
         type:event_type as string,
         title:event_title as string,
         provider:event_provider_name as string,
-        StartDateAndTime:(value as Date).toISOString(), // UTC ISO 8601
+        StartDateAndTime:localTime.toISOString().slice(0, 19), // UTC ISO 8601
         lastingTime:event_lasting_time_in_minutes as number,
         location:event_location as string,
         image: imageurl as string,
@@ -79,6 +81,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       };
   
       try {
+        alert(`time that picked up: ${localTime.toISOString().slice(0, 19)}`);
         const res = await fetch("http://localhost:8000/test_datetime", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -165,24 +168,6 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                         preview                                          
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// export type EventInfo = {
-//   eventId: string;
-//   type: string;
-//   title: string;
-//   provider: string;
-//   dayOfMonth: string;
-//   month: string;
-//   dayOfWeek: string;
-//   date: string;
-//   startTime: string;
-//   time: string;
-//   location: string;
-//   imageUrl: string;
-//   description: string;
-//   totalTicketNumber?: number;
-//   remainingTicketNumber?: number;
-// };
 
 const preview_event_info: EventInfo = {
   eventId: "sampleEventId",
@@ -333,7 +318,6 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
             try{
               const imageurlholder = await handleImageSubmit();  
               console.log("test:"+event_image_uuid_from_backend);
-              alert("test2:"+imageurlholder);
               await handleSubmitDate(imageurlholder as string);   
             }
             catch{
