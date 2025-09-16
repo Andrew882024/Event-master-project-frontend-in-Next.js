@@ -5,13 +5,13 @@ import { EventInfo } from "@/src/data/sampleData";
 import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { serverUrl } from "@/src/data/severUrl";
 
 //style={{backgroundImage: "url('/UCSD_1.webp')", backgroundSize: 'cover'}}
 
 
 
 export const Eventdetail_page = ({eventInfor = EventInfoFromDBDefault}:{eventInfor?:EventInfoFromDB}) =>{
-
   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
     queryKey: ['EventInfoFromDB'],
     queryFn: fetchEventInfoFromDB,
@@ -56,6 +56,39 @@ const key = eventInfor.event_imageUrl;
     fetchImage();
   }, [key]);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////handle ticket booking////////////////////////////////////////
+
+const handleBooking = async() =>{
+  const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
+  const user_id:number = jwtInfo.user.user_id;
+  const event_id:number = eventInfor.id;
+  alert(`the user id is: ${user_id}, the event id is: ${event_id}`);
+  alert(serverUrl+'/bookTicket');
+
+  const res = await fetch(serverUrl+'/bookTicket', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwtInfo.access_token}`,
+    },
+    body: JSON.stringify({ user_id: user_id, event_id: event_id, number_of_tickets: 1 }),
+  })
+
+  if (!res.ok) {
+    const errorText = await res.json();
+    alert(`There is an error: ${errorText.detail}, please try again`);
+    return;
+  }
+  const output = await res.json();
+  if(output.status === "SuccessfullyBookedTicket"){
+    alert("You have successfully booked the ticket for this event, you can check it in your Account page(not implemented yet),\n you will also receive a confirmation email with the ticket details.");
+    window.location.reload();
+    return;
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   return(
@@ -107,7 +140,7 @@ const key = eventInfor.event_imageUrl;
               <div className=" w-[100%] ">
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Total seats: ${eventInfor.event_total_ticket_number}`}</div>
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Available seats: ${eventInfor.event_remaining_ticket_number}`}</div>
-                <div className=" w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px]" onClick={()=>alert(`the event id is:${eventInfor.id}`)}>Join Event</div>
+                <div className=" w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px]" onClick={handleBooking}>Join Event</div>
               </div>
             </div>
           </div>

@@ -63,11 +63,6 @@ export default function SignIn_page() {
       }
       alert("you are signed in (Functionality not implemented)");
       console.log(output);
-      // localStorage.setItem("user_id", output.user.user_id);
-      // localStorage.setItem("user_name", output.user.username);
-      // localStorage.setItem("user_email", output.user.email);
-      // localStorage.setItem("access_token", output.access_token);
-      // localStorage.setItem("user_role", output.user.roles);
       localStorage.setItem("JWT_access_token_Info", JSON.stringify(output));
 
       //output:{access_token, token_type, expires_in, user:{user_id, username, email, roles[]}}
