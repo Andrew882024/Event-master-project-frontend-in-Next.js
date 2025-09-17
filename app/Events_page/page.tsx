@@ -49,39 +49,19 @@ const Events_page = () =>{
             // <div key = {post.id} className="text-black">{post.id}</div>
           } )}
           <Event_box1_db />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
+          
         </div>
       </div>
       <div className="  m-[10px] mt-[30px]">
         <div className="text-[15px] text-gray-500 ">Event in current month:</div>
         <div className=" flex flex-wrap">
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
+          
         </div>
       </div>
       <div className="  m-[10px] mt-[30px]">
         <div className="text-[15px] text-gray-500 ">Event later:</div>
         <div className=" flex flex-wrap">
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
-          <Event_box1 />
+          
         </div>
       </div>
       </div>

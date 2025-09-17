@@ -17,11 +17,15 @@ import { EventInfo } from "@/src/data/sampleData";
 import {Preview_eventdetail_page} from "../../src/component/big_component/Preview_detail_page";
 import { FullScreenPreview } from "@/src/component/big_component/FullScreenPreview";
 
+const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
+const user_id:number = jwtInfo.user.user_id;
+
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 type Creating_Event_info = { 
+  user_id:number;
   type:string;
   title:string;
   provider:string;
@@ -69,6 +73,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
 
       const localTime = new Date((value as Date).getTime() - 7 * 60 * 60 * 1000); // Convert to UTC by subtracting 7 hours
       const creating_event_info: Creating_Event_info = {
+        user_id: user_id,
         type:event_type as string,
         title:event_title as string,
         provider:event_provider_name as string,
@@ -84,7 +89,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
         alert(`time that picked up: ${localTime.toISOString().slice(0, 19)}`);
         const res = await fetch("http://localhost:8000/test_datetime", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtInfo.access_token}`, },
           body: JSON.stringify(creating_event_info), // <-- send the payload
         });
         const data = await res.json();
