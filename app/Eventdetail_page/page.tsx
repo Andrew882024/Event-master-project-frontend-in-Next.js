@@ -6,6 +6,7 @@ import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { serverUrl } from "@/src/data/severUrl";
+import Control_broad_new from "@/src/component/Control_broad_new";
 
 //style={{backgroundImage: "url('/UCSD_1.webp')", backgroundSize: 'cover'}}
 
@@ -92,10 +93,10 @@ const handleBooking = async() =>{
 
 
   return(
-    <div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-full" >
-      <div className="ml-[16px]"><Control_broad/></div>
+    <div className="absolute top-0 left-0 bg-gray-200 min-h-screen w-full overflow-x-hidden" >
+      <Control_broad_new/>
       <title>Event Detail Page</title>
-      <div className="absolute top-[115px] min-h-[1000px] w-full bg-gray-200">
+      <div className="absolute top-[80px] min-h-[1000px] w-full bg-gray-200">
         <div className="flex justify-center w-full">
           <div className="mt-[10px] w-[1160px] min-h-[490px]  flex justify-center">
             <div className="absolute w-[1150px] h-[490px] ded-[10px]  text-black rounded-[10px]" style={{ backgroundColor: '#d8ffd8' }}>

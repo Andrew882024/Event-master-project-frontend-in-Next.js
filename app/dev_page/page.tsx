@@ -8,27 +8,13 @@ import { useQuery, useMutation} from "@tanstack/react-query";
 import { EventInfoFromDB } from "@/src/data/dataFromDB";
 import { fetchEventInfoFromDB } from "@/src/data/dataFromDB";
 import { serverUrl } from "@/src/data/severUrl";
+import Control_broad_new from "@/src/component/Control_broad_new";
 
 
 
 
 
 const Dev = () =>{
-  // const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
-  //   queryKey: ['EventInfoFromDB'],
-  //   queryFn: fetchEventInfoFromDB,
-  //   staleTime: 60 * 60 * 1000, // 1 hour
-  //   refetchInterval: 60 * 60 * 1000, // 1 hour
-  // });
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (isError) {
-  //   return <div>Error: {(error as Error).message}</div>;
-  // }
-
   const test_bearer_token = async() =>{
     console.log(localStorage.getItem("access_token"));
     const res = await fetch(`${serverUrl}/test_post_for_jwt_bearer`, {
@@ -40,7 +26,9 @@ const Dev = () =>{
   }
 
   return(
+
     <div className="absolute top-0 left-0 bg-gray-300 min-h-screen w-screen flex items-center justify-center ">
+      <Control_broad_new/>
       <title>Dev Page</title>
       <div>
         {/* <div className='text-[30px] text-blue-600'>Upload image</div>

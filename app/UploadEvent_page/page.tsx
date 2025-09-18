@@ -1,5 +1,5 @@
 "use client";
-import Control_broad from "@/src/component/Control_broad";
+import Control_broad_new from "@/src/component/Control_broad_new";
 //import Event_info_picker from "@/src/component/Event_info_picker";
 import MyDropzone from "@/src/component/small_element/Upload_image";
 
@@ -202,9 +202,9 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
 
 
   return(<div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-full">
-    <Control_broad/>
+    <Control_broad_new/>
     <title>Upload Event Page</title>
-    <div className="absolute top-[115px] min-h-[1000px] w-full bg-gray-50 ">
+    <div className="absolute top-[70px] min-h-[1000px] w-full bg-gray-50 ">
       <div className="flex justify-center text-center">
       <div className=" text-[30px] text-gray-900 font-Nunito mt-[10px] mb-[20px] ml-[]">Create New Event</div>
       </div>
