@@ -1,7 +1,7 @@
 "use client";
 import Control_broad_new from "@/src/component/Control_broad_new";
 //import Event_info_picker from "@/src/component/Event_info_picker";
-import MyDropzone from "@/src/component/small_element/Upload_image";
+//import MyDropzone from "@/src/component/small_element/Upload_image";
 
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
@@ -43,18 +43,18 @@ const UploadEvent_page = () =>{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                        event info small                                         
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-const [event_type, set_event_type] = useState<String>("empty");
-const [event_title, set_event_title] = useState<String>("empty");
-const [event_provider_name, set_event_provider_name] = useState<String>("empty");
+const [event_type, set_event_type] = useState<string>("empty");
+const [event_title, set_event_title] = useState<string>("empty");
+const [event_provider_name, set_event_provider_name] = useState<string>("empty");
 const [event_lasting_time_in_minutes, set_event_lasting_time_in_minutes] = useState<number>(0);
-const [event_location, set_event_location] = useState<String>("empty");
-const [event_description, set_event_description] = useState<String>("empty");
+const [event_location, set_event_location] = useState<string>("empty");
+const [event_description, set_event_description] = useState<string>("empty");
 const [event_total_ticket_number, set_event_total_ticket_number] = useState<number>(0);
 
 //tool
 const [description_word_count,set_description_word_count] = useState<number>(0);
 //image uuid
-const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useState<String>("empty");
+const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useState<string>("empty");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                       Event_date_and_time_picker                                          
@@ -62,7 +62,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
     const [value, onChange] = useState<Value>(null);
   
     const f = new Intl.DateTimeFormat('en-us', { dateStyle: 'full', timeStyle: 'full' ,hourCycle: 'h23'});
-    let isValidDate = value instanceof Date && !isNaN(value.getTime());
+    const isValidDate = value instanceof Date && !isNaN(value.getTime());
 
       const handleSubmitDate = async (imageurl:string) => {
       if (!isValidDate) {
@@ -192,7 +192,7 @@ const preview_event_info: EventInfo = {
   remainingTicketNumber: event_total_ticket_number as number,
 }
 
-const [showPreview, setShowPreview] = useState<Boolean>(false);
+const [showPreview, setShowPreview] = useState<boolean>(false);
 
 
 
@@ -245,7 +245,7 @@ const [showPreview, setShowPreview] = useState<Boolean>(false);
       onChange={(e) => set_event_type(e.target.value)} placeholder="please enter your event type"/>
 </div>
 <div>
-    <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Provider's Name:</div>
+    <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Provider&apos;s Name:</div>
     <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
       onChange={(e) => set_event_provider_name(e.target.value)} placeholder="please enter event provider's name"/>
 </div>

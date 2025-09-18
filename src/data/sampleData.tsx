@@ -16,7 +16,7 @@ export type EventInfo = {
   remainingTicketNumber?: number;
 };
 
-export let InPageEventInforDefault:EventInfo = {
+export const InPageEventInforDefault:EventInfo = {
   eventId: "id_1",
   type: "Music",
   title: "Academy of St. Martin in the Fields Chamber Ensemble",

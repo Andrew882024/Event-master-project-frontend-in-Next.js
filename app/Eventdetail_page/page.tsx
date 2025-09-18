@@ -1,8 +1,8 @@
 "use client";
 import { EventInfoFromDB, EventInfoFromDBDefault, fetchEventInfoFromDB } from "@/src/data/dataFromDB";
-import Control_broad from "../../src/component/Control_broad";
-import { EventInfo } from "@/src/data/sampleData";
-import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
+
+// import { EventInfo } from "@/src/data/sampleData";
+// import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { serverUrl } from "@/src/data/severUrl";
@@ -37,7 +37,7 @@ const key = eventInfor.event_imageUrl;
           const now = Date.now() / 1000;
           if (expiresAt && expiresAt > now + 60) {
             setSrc(cachedUrl);
-            return; // ✅ reuse presigned URL
+            return; // reuse presigned URL
           }
         }
 

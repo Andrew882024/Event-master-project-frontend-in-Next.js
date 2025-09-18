@@ -1,4 +1,4 @@
-import Control_broad from "../Control_broad";
+import Control_broad_new from "../Control_broad_new";
 import { EventInfo } from "@/src/data/sampleData";
 import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 
@@ -8,10 +8,10 @@ import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 
 export const Preview_eventdetail_page = ({eventInfor = EventInfoList[0]}:{eventInfor?:EventInfo}) =>{
   return(
-    <div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-full" >
-      <div className="ml-[16px]"><Control_broad/></div>
+    <div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-full overflow-x-hidden" >
+      <Control_broad_new/>
       <title>Event Detail Page</title>
-      <div className="absolute top-[115px] min-h-[1000px] w-full bg-gray-200">
+      <div className="absolute top-[70px] min-h-[1000px] w-full bg-gray-200">
         <div className="flex justify-center w-full">
           <div className="mt-[10px] w-[1160px] min-h-[490px]  flex justify-center">
             <div className="absolute w-[1150px] h-[490px] ded-[10px]  text-black rounded-[10px]" style={{ backgroundColor: '#d8ffd8' }}>

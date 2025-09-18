@@ -1,4 +1,4 @@
-let userInfor:object ={
+const userInfor:object ={
     userName: "John Doe",
     email: "",
     password: "",
@@ -8,7 +8,7 @@ let userInfor:object ={
     history: [],
 }
 
-let eventInfor:object ={
+const eventInfor:object ={
     eventName: "",
     eventDate: "",
     eventType: "",
@@ -22,6 +22,6 @@ let eventInfor:object ={
 
 
 
-let allEvent:object[] = [];
+const allEvent:object[] = [];
 
 export {userInfor, eventInfor, allEvent};

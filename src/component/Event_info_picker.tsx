@@ -32,7 +32,7 @@ function Event_info_picker() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////// 
   const f = new Intl.DateTimeFormat('en-us', { dateStyle: 'full', timeStyle: 'full' ,hourCycle: 'h23'});
-  let isValidDate = value instanceof Date && !isNaN(value.getTime());
+  const isValidDate = value instanceof Date && !isNaN(value.getTime());
     if (isValidDate) {
       console.log(f.format(value as Date));
     } else {

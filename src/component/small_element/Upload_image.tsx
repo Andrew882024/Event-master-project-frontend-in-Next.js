@@ -82,7 +82,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         {
           isDragActive ?
             <p className='text-[20px] text-gray-700'>Drop the files here ...</p> :
-            <p className='text-[20px] text-gray-700'>Drag 'n' drop some files here, or click to select files</p>
+            <p className='text-[20px] text-gray-700'>Drag &apos;n&apos; drop some files here, or click to select files</p>
         }
       </div>
       {/* Preview */}
