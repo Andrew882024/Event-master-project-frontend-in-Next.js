@@ -5,8 +5,22 @@ import Control_broad_new from "@/src/component/Control_broad_new";
 
 const MyAccount_page = () =>{
 
-  const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
-  const user_id:number = jwtInfo.user.user_id;
+  // const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
+  // const user_id:number = jwtInfo.user.user_id;
+
+  const jwtInfo =
+  typeof window !== "undefined"
+    ? (() => {
+        try {
+          const raw = window.localStorage.getItem("JWT_access_token_Info");
+          return raw ? JSON.parse(raw) : null;
+        } catch {
+          return null;
+        }
+      })()
+    : null;
+
+const user_id: number | null = jwtInfo?.user?.user_id ?? null;
 
   if(jwtInfo === null || jwtInfo === undefined){
     return(

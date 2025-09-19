@@ -17,8 +17,22 @@ import { EventInfo } from "@/src/data/sampleData";
 import {Preview_eventdetail_page} from "../../src/component/big_component/Preview_detail_page";
 import { FullScreenPreview } from "@/src/component/big_component/FullScreenPreview";
 
-const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
-const user_id:number = jwtInfo.user.user_id;
+// const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
+// const user_id:number = jwtInfo.user.user_id;
+
+const jwtInfo =
+  typeof window !== "undefined"
+    ? (() => {
+        try {
+          const raw = window.localStorage.getItem("JWT_access_token_Info");
+          return raw ? JSON.parse(raw) : null;
+        } catch {
+          return null;
+        }
+      })()
+    : null;
+
+const user_id: number | null = jwtInfo?.user?.user_id ?? null;
 
 type ValuePiece = Date | null;
 
@@ -70,10 +84,14 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
         alert('date is empty or wrong, try again');
         return;
       }
-
+      if(user_id === null){
+        console.warn("user_id is null");
+        alert('user_id is null, something is wrong');
+        return;
+      }
       const localTime = new Date((value as Date).getTime() - 7 * 60 * 60 * 1000); // Convert to UTC by subtracting 7 hours
       const creating_event_info: Creating_Event_info = {
-        user_id: user_id,
+        user_id: user_id as number,
         type:event_type as string,
         title:event_title as string,
         provider:event_provider_name as string,

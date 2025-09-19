@@ -9,6 +9,15 @@ import React, { useEffect, useState } from "react";
 
 let InPageEventInfor:EventInfoFromDB;
 
+type eventInfoType = {
+  eventName: string;
+  eventDate: string;
+  eventType: string;
+  eventImage: string;
+  eventProvider: string;
+  eventLocation: string;
+}
+
 
 
 const Event_box1_db = ({InPageEventInfor = EventInfoFromDBDefault}:{InPageEventInfor?:EventInfoFromDB} ) => {
@@ -19,7 +28,7 @@ const Event_box1_db = ({InPageEventInfor = EventInfoFromDBDefault}:{InPageEventI
     navigate.push(root);
   }
 
-  const eventInfor: any = {
+  const eventInfor: eventInfoType = {
     eventName: InPageEventInfor.event_title,
     eventDate: `${InPageEventInfor.event_start_date_and_time.toLocaleDateString("en-US", {month: "short"}).toUpperCase()} ${InPageEventInfor.event_start_date_and_time.getDate().toString()} ${InPageEventInfor.event_start_date_and_time.toLocaleString('en-US', { weekday: 'short' }).toUpperCase()} ${InPageEventInfor.event_start_date_and_time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}`,
     eventType: InPageEventInfor.event_type,

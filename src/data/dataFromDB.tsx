@@ -39,7 +39,7 @@ export type EventInfoFromDB ={
     const res = await fetch('http://localhost:8000/a_page_of_events');
     const data = await res.json();
 
-    return data.map((item: any) => ({
+    return data.map((item: EventInfoFromDB) => ({
     ...item,
     created_at: new Date(item.created_at),
     updated_at: new Date(item.updated_at),
