@@ -5,8 +5,12 @@ import {EventInfo, EventInfoList} from "@/src/data/sampleData";
 import { EventInfoFromDB } from "@/src/data/dataFromDB";
 import Event_box1_db from "@/src/component/small_element/Event_box1_db";
 import { fetchEventInfoFromDB } from "@/src/data/dataFromDB";
+import { Filter } from "lucide-react";
+import { useState } from "react";
 
 const Events_page = () =>{
+  const [currentTab, setCurrentTab] = useState("All Events");
+  const [currentSelect, setCurrentSelect] = useState("Up Coming Events");
 
   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
     queryKey: ['EventInfoFromDB'],
@@ -25,18 +29,54 @@ const Events_page = () =>{
 
   console.log(EventInfoList[1]);
   
-  return(<div className="absolute top-0 left-0 bg-gray-100 min-h-screen w-screen overflow-x-hidden">
+  return(<div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-screen overflow-x-hidden">
     <Control_broad_new/>
     <title>Events Page</title>
-    <div className="absolute top-[70px] min-h-[1000px] w-full bg-gray-100 flex justify-center">
+    <div className="absolute top-[70px] min-h-[1000px] w-full bg-gray-50 flex justify-center">
       <div>
-      <div className=" text-gray-500 text-[20px] font-Nunito mt-[10px]">
-            <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >All Events</div>
-            <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Work Shop</div>
-            <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Show</div>
-            <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Fun Activities</div>
-      </div>
-      <div className=" w-[1250px] bg-gray-100 rounded-[20px] box-border">
+        {/* <div className=" text-gray-500 text-[20px] font-Nunito mt-[10px]">
+              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >All Events</div>
+              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Work Shop</div>
+              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Show</div>
+              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Fun Activities</div>
+        </div> */}
+        {/* headers */}
+        <div className="text-[35px] font-bold text-gray-900 mt-[5px] ml-[10px]">Campus Events</div>
+        <div className="text-[15px] text-gray-500 mb-[25px] ml-[10px]">Discover the latest events happening on campus. From workshops to shows, find something that piques your interest!</div>
+        {/* filter */}
+        <div className="ml-[10px] w-[1205px] h-[170px] bg-gray-100 mt-[10px] mb-[20px] border-[1px] border-gray-400 rounded-[20px] box-border">
+        <div className=" mt-[10px] ml-[25px] mb-[10px]"> 
+          <Filter className="inline-block w-[20px] h-[20px] mr-[5px] mt-[-7px] text-gray-900"/> 
+          <div className="inline-block text-[18px] text-gray-900 font-bold m-[10px]">Events Filter</div>
+        </div>
+        {/* filter tabs */}
+        <div className="mt-[25px] flex">
+          {/* left part */}
+          <div className=" ml-[25px]">
+            <div className=" text-[14px] text-gray-500 mb-[0px]">Filter by event type:</div>
+            {/* tabs */}
+            <ul className="mt-[5px] ml-[5px] mb-[10px] h-[27px] w-[900px] bg-gray-200 rounded-[5px] flex justify-center items-center gap-[5px] border-[1px] border-gray-300 box-border">
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "All Events"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("All Events")}}>All Events</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Work Shop"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Work Shop")}}>Work Shop</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Show"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Show")}}>Show</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Fun Activities"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Fun Activities")}}>Fun Activities</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Sports"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Sports")}}>Sports</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Others"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Others")}}>Others</li>             
+            </ul>
+          </div>
+          {/* right part */}
+          <div className=" ml-[35px]">
+            <div className=" text-[14px] text-gray-500 mb-[0px]">Select:</div>
+            <select className=" mt-[5px] w-[200px] h-[27px] bg-gray-200 rounded-[5px] text-gray-900 text-[14px] border-[1px] outline-none border-gray-300 box-border cursor-pointer" onChange={(e)=>{setCurrentSelect(e.target.value)}}>
+              <option value="Up Coming Events">Up Coming Events</option>
+              <option value="Up Coming Events">History Events</option>
+            </select>
+          </div>
+        </div>
+    </div>
+
+      {/* show events */}
+      <div className=" w-[1250px] bg-gray-50 rounded-[20px] box-border">
       <div className="  m-[10px]">
         <div className="text-[15px] text-gray-500 ">Event in this week:</div>
         <div className=" flex flex-wrap">
