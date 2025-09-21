@@ -79,7 +79,7 @@ const key = eventInfor.eventImage;
 
 
   return(
-    <div className="group w-[280px] h-[350px]  overflow-hidden rounded-[20px] m-[10px] transition duration-200 ease-in-out bg-gray-100 shadow-[0_0_12px_rgba(0,0,0,0.2)]   cursor-pointer hover:shadow-gray-500 shadow-gray-400"  onClick={()=>{loadPage(`/Eventdetail_page/${InPageEventInfor.id}`)}}>
+    <div className="group w-[280px] h-[350px]  overflow-hidden rounded-[20px] m-[10px] transition duration-200 ease-in-out bg-gray-100 border-[1px] border-gray-400 box-border  cursor-pointer hover:shadow-lg shadow-gray-400"  onClick={()=>{loadPage(`/Eventdetail_page/${InPageEventInfor.id}`)}}>
       <div className="w-[95%] h-[175px] ml-[2.5%] mt-[2.5%] overflow-hidden rounded-[15px]">
         <img src={src||"/default1.png"} className="mt-[2px] w-full h-full object-cover  transition duration-200 ease-in-out group-hover:scale-105"/> 
       </div>
