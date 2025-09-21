@@ -91,7 +91,7 @@ const key = eventInfor.eventImage;
 
         <div className="h-[44px] relative mt-[5px]">
           <div className="text-gray-600 text-lg font-Nunito h-[100%] inline-block">{eventInfor.eventDate}</div>
-          <div className="text-orange-400 text-lg font-Nunito h-[100%] inline-block absolute right-0 top-0">{eventInfor.eventType}</div>
+          <div className="text-blue-500 text-lg font-Nunito h-[100%] inline-block absolute right-0 top-0">{eventInfor.eventType}</div>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const Events_page = () =>{
   const [currentTab, setCurrentTab] = useState("All Events");
-  const [currentSelect, setCurrentSelect] = useState("Up Coming Events");
+  const [currentSelect, setCurrentSelect] = useState("Upcoming Events");
 
   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
     queryKey: ['EventInfoFromDB'],
@@ -28,19 +28,16 @@ const Events_page = () =>{
   }
 
   console.log(EventInfoList[1]);
+  console.log(data);
+
+  const upcomingEvents = data?.filter(event => new Date(event.event_start_date_and_time) >= new Date());
+  const historyEvents = data?.filter(event => new Date(event.event_start_date_and_time) < new Date());
   
   return(<div className="absolute top-0 left-0 bg-gray-50 min-h-screen w-screen overflow-x-hidden">
     <Control_broad_new/>
     <title>Events Page</title>
     <div className="absolute top-[70px] min-h-[1000px] w-full bg-gray-50 flex justify-center">
       <div>
-        {/* <div className=" text-gray-500 text-[20px] font-Nunito mt-[10px]">
-              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >All Events</div>
-              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Work Shop</div>
-              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Show</div>
-              <div className="inline-block m-2 cursor-pointer text-black pt-[2px] pb-[4px] pl-[10px]  pr-[10px] border-[1px] border-gray-500 rounded-[20px] hover:bg-blue-500 hover:text-white hover:border-blue-600" >Fun Activities</div>
-        </div> */}
-        {/* headers */}
         <div className="text-[35px] font-bold text-gray-900 mt-[5px] ml-[10px]">Campus Events</div>
         <div className="text-[15px] text-gray-500 mb-[25px] ml-[10px]">Discover the latest events happening on campus. From workshops to shows, find something that piques your interest!</div>
         {/* filter */}
@@ -57,9 +54,9 @@ const Events_page = () =>{
             {/* tabs */}
             <ul className="mt-[5px] ml-[5px] mb-[10px] h-[27px] w-[900px] bg-gray-200 rounded-[5px] flex justify-center items-center gap-[5px] border-[1px] border-gray-300 box-border">
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "All Events"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("All Events")}}>All Events</li>
-                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Work Shop"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Work Shop")}}>Work Shop</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Work Shop"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Workshop")}}>Workshop</li>
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Show"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Show")}}>Show</li>
-                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Fun Activities"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Fun Activities")}}>Fun Activities</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Music"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Music")}}>Music</li>
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Sports"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Sports")}}>Sports</li>
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Others"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Others")}}>Others</li>             
             </ul>
@@ -67,9 +64,9 @@ const Events_page = () =>{
           {/* right part */}
           <div className=" ml-[35px]">
             <div className=" text-[14px] text-gray-500 mb-[0px]">Select:</div>
-            <select className=" mt-[5px] w-[200px] h-[27px] bg-gray-200 rounded-[5px] text-gray-900 text-[14px] border-[1px] outline-none border-gray-300 box-border cursor-pointer" onChange={(e)=>{setCurrentSelect(e.target.value)}}>
-              <option value="Up Coming Events">Up Coming Events</option>
-              <option value="Up Coming Events">History Events</option>
+            <select className=" mt-[5px] w-[200px] h-[27px] bg-gray-200 rounded-[5px] text-gray-900 text-[14px] border-[1px] outline-none border-gray-300 box-border cursor-pointer" onChange={(e)=>{setCurrentSelect(e.target.value),console.log(e.target.value)}}>
+              <option value="Upcoming Events">Upcoming Events</option>
+              <option value="History Events">History Events</option>
             </select>
           </div>
         </div>
@@ -78,20 +75,49 @@ const Events_page = () =>{
       {/* show events */}
       <div className=" w-[1250px] bg-gray-50 rounded-[20px] box-border">
       <div className="  m-[10px]">
-        <div className="text-[15px] text-gray-500 ">Event in this week:</div>
+        <div className="text-[15px] text-gray-500 ">{currentSelect}:</div>
         <div className=" flex flex-wrap">
-          {/* {EventInfoList.map(EventInfo=>{
-            return(<Event_box1 InPageEventInfor={EventInfo} key={EventInfo.eventId}/>);
-          })} */}
-          {data?.toReversed().map((post) => {
-            return(<Event_box1_db InPageEventInfor={post} key={post.id}/>);
-            // <div key = {post.id} className="text-black">{post.id}</div>
-          } )}
-          <Event_box1_db />
+        {currentSelect === "Upcoming Events" && (
+          <>
+          {currentTab === "All Events" && upcomingEvents?.reverse().map((post: EventInfoFromDB | undefined) => {
+            if (!post) return null;
+            return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
+          })}
+
+          {/* Example for filtered events, adjust filter logic as needed */}
+          {((currentTab != "All Events")&&currentTab != "Other") && upcomingEvents?.reverse().filter(p => (p.event_type ?? "").trim() === currentTab).toReversed().map((post) => {
+            return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
+          })}
+
+          {(currentTab === "Others") && upcomingEvents?.reverse().filter(p => !["workshop","show","music","sports"].includes((p.event_type ?? "").trim().toLowerCase())).toReversed().map((post) => {
+            return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
+          })}
+          
+          </>
+        )}
+
+        {currentSelect === "History Events" && (
+          <>
+          {currentTab === "All Events" && historyEvents?.map((post: EventInfoFromDB | undefined) => {
+            if (!post) return null;
+            return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
+          })}
+
+          {/* Example for filtered events, adjust filter logic as needed */}
+          {((currentTab != "All Events")&&currentTab != "Other") && historyEvents?.filter(p => (p.event_type ?? "").trim() === currentTab).toReversed().map((post) => {
+            return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
+          })}
+
+          {(currentTab === "Others") && historyEvents?.filter(p => !["workshop","show","music","sports"].includes((p.event_type ?? "").trim().toLowerCase())).toReversed().map((post) => {
+            return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
+          })}
+          
+          </>
+        )}
           
         </div>
       </div>
-      <div className="  m-[10px] mt-[30px]">
+      {/* <div className="  m-[10px] mt-[30px]">
         <div className="text-[15px] text-gray-500 ">Event in current month:</div>
         <div className=" flex flex-wrap">
           
@@ -102,7 +128,7 @@ const Events_page = () =>{
         <div className=" flex flex-wrap">
           
         </div>
-      </div>
+      </div> */}
       </div>
     </div>
     </div>

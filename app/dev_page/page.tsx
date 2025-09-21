@@ -1,11 +1,4 @@
 "use client"
-// import Event_box1 from "../../src/component/small_element/Event_box1";
-// import MyDropzone from "@/src/component/small_element/Upload_image";
-// import Test_download_image from "@/src/component/small_element/Test_download_image";
-// import Load_image from "@/src/component/small_element/Load_image";
-// import { useQuery, useMutation} from "@tanstack/react-query";
-// import { EventInfoFromDB } from "@/src/data/dataFromDB";
-// import { fetchEventInfoFromDB } from "@/src/data/dataFromDB";
 import { serverUrl } from "@/src/data/severUrl";
 import Control_broad_new from "@/src/component/Control_broad_new";
 

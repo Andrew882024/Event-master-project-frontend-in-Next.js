@@ -119,7 +119,7 @@ const MyAccount_page = () =>{
 
                   <div className="ml-[-10] w-full h-[150px] rounded-[10px] box-border flex justify-start items-start">
                     <div className="w-[10%] h-full inline-flex justify-start items-start ">
-                      <img src={"/default user image.png"} className="ml-[20px] w-[80px] h-[80px] mt-[20px] ml-[10px] border-[2px] border-gray-600 rounded-[50%]"/>
+                      <img src={"/default user image.png"} className="w-[80px] h-[80px] mt-[20px] ml-[20px] border-[2px] border-gray-600 rounded-[50%]"/>
                     </div>
                     <div className="w-[40%] h-full inline-flex flex-col justify-start items-center pl-[20px]">
                       <div className="w-full h-[30px] mt-[10px] flex">
