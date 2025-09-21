@@ -43,7 +43,7 @@ const Events_page = () =>{
           {/* {EventInfoList.map(EventInfo=>{
             return(<Event_box1 InPageEventInfor={EventInfo} key={EventInfo.eventId}/>);
           })} */}
-          {data?.map((post) => {
+          {data?.toReversed().map((post) => {
             return(<Event_box1_db InPageEventInfor={post} key={post.id}/>);
             // <div key = {post.id} className="text-black">{post.id}</div>
           } )}

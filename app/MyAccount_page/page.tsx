@@ -5,45 +5,9 @@ import Control_broad_new from "@/src/component/Control_broad_new";
 import {useState, useEffect, useRef} from "react";
 import { User, Mail, Hash, Shield, Calendar, Clock, MapPin, Users, Edit3, Trash2, Eye, Settings } from "lucide-react"
 import { UserInfoMyAccount, UserBookedEventsInfoMyAccount, EventsThatProvidedByTheUserMyAccount } from "@/src/data/dataForMyAccount";
+import Event_box_my_account from "@/src/component/small_element/Event_box_my_account";
+import Event_box_provider_my_account from "@/src/component/small_element/Event_box_provider_my_account";
 
-
-
-// type UserInfoMyAccount = {
-//   id: number;
-//   user_name: string;
-//   email: string;
-//   created_at: Date;
-//   roles: string[];
-// }
-
-// type UserBookedEventsInfoMyAccount = {
-//   booking_id: number;
-//   event_description: string;
-//   event_id: number;
-//   event_image: string;
-//   event_lasting_time: number;
-//   event_location: string;
-//   event_provider_id: number;
-//   event_start_date_and_time: Date;
-//   event_title: string;
-//   event_type: string;
-//   number_of_tickets_booked: number;
-//   ticket_code: string;
-// }[]
-
-// type EventsThatProvidedByTheUserMyAccount = {
-//   event_description: string;
-//   event_id: number;
-//   event_image: string;
-//   event_lasting_time: number;
-//   event_location: string;
-//   event_provider_id: number;
-//   event_start_date_and_time: Date;
-//   event_title: string;
-//   event_type: string;
-//   event_total_ticket_number: number;
-//   event_remaining_ticket_number: number;
-// }[]
 
 
 const MyAccount_page = () =>{
@@ -55,54 +19,22 @@ const MyAccount_page = () =>{
   const [userBookedEventsInfoHistory, setUserBookedEventsInfoHistory] = useState<UserBookedEventsInfoMyAccount>([]);
  
   const ran = useRef(false);
-  // const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
-  // const user_id:number = jwtInfo.user.user_id;
+  useEffect(() => {
 
-  //   const jwtInfo =
-  //   typeof window !== "undefined"
-  //     ? (() => {
-  //         try {
-  //           const raw = window.localStorage.getItem("JWT_access_token_Info");
-  //           return raw ? JSON.parse(raw) : null;
-  //         } catch {
-  //           return null;
-  //         }
-  //       })()
-  //     : null;
+    if(localStorage.getItem("JWT_access_token_Info") === null){
+      alert("You are not signed in, please sign in first.");
+      window.location.href = "/";
+      return;
+    }
 
-  // const user_id: number | null = jwtInfo?.user?.user_id ?? null;
+    if (ran.current) return;
+    ran.current = true;
 
-  //   if(jwtInfo === null || jwtInfo === undefined){
-  //     return(
-  //       <div className="abosolute top-0 left-0 w-screen h-screen bg-gray-200 flex justify-center items-center">
-  //         <div className="text-black text-3xl">You are not signed in, please sign in first</div>
-  //       </div>
-  //     );
-  //   }
+    const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
+    const user_id:number = jwtInfo.user.user_id;
 
-useEffect(() => {
-  if (ran.current) return;
-  ran.current = true;
-
-  const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
-  const user_id:number = jwtInfo.user.user_id;
-
-  const getUserInfo = async() =>{
-    const res = await fetch(serverUrl+`/getUserInfo/${user_id}`,{
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwtInfo.access_token}`,
-      },
-    })
-    const output = await res.json();
-    console.log("getUserInfo:");
-    console.log(output);
-    setUserInfo(output);
-    };
-
-    const getUserBookedEventsInfo = async() =>{
-      const res = await fetch(serverUrl+`/getUserBookedEventsInfo/${user_id}`,{
+    const getUserInfo = async() =>{
+      const res = await fetch(serverUrl+`/getUserInfo/${user_id}`,{
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -110,38 +42,49 @@ useEffect(() => {
         },
       })
       const output = await res.json();
-      console.log("getUserBookedEventsInfo:");
+      console.log("getUserInfo:");
       console.log(output);
-      setUserBookedEventsInfo(output);
-      setUserBookedEventsInfoUpComing(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) >= new Date()));
-      setUserBookedEventsInfoHistory(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) < new Date()));
-    };
+      setUserInfo(output);
+      };
 
-    const getEventsThatProvidedByTheUser = async() =>{
-      const res = await fetch(serverUrl+`/getEventsThatProvidedByTheUser/${user_id}`,{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${jwtInfo.access_token}`,
-        },
-      })
-      const output = await res.json();
-      console.log("getEventsThatProvidedByTheUser:");
-      console.log(output);
-      setEventsThatProvidedByTheUser(output);
-    }
-    if(user_id){
-      getUserInfo();
-      getUserBookedEventsInfo();
-      getEventsThatProvidedByTheUser();
-    }
+      const getUserBookedEventsInfo = async() =>{
+        const res = await fetch(serverUrl+`/getUserBookedEventsInfo/${user_id}`,{
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwtInfo.access_token}`,
+          },
+        })
+        const output = await res.json();
+        console.log("getUserBookedEventsInfo:");
+        console.log(output);
+        setUserBookedEventsInfo(output);
+        setUserBookedEventsInfoUpComing(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) >= new Date()));
+        setUserBookedEventsInfoHistory(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) < new Date()));
+      };
 
-    
-},[]);
+      const getEventsThatProvidedByTheUser = async() =>{
+        const res = await fetch(serverUrl+`/getEventsThatProvidedByTheUser/${user_id}`,{
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwtInfo.access_token}`,
+          },
+        })
+        const output = await res.json();
+        console.log("getEventsThatProvidedByTheUser:");
+        console.log(output);
+        setEventsThatProvidedByTheUser(output);
+      }
+      if(user_id){
+        getUserInfo();
+        getUserBookedEventsInfo();
+        getEventsThatProvidedByTheUser();
+      }
 
       
-    
-    
+  },[]);
+   
   return(
     <div className="">
       <div className="abosolute top-0 left-0 w-screen min-h-[1000px] bg-gray-50 overflow-x-hidden">
@@ -230,18 +173,36 @@ useEffect(() => {
             
 
             {/* Upcoming Events Content */}
-            <div className={`w-full min-h-[380px] bg-gray-50 text-black ${currentTab === "Upcoming Events"?"":"hidden"}`}>
-              Upcoming Events Content
+            <div className={` w-full min-h-[380px] bg-gray-50 text-black ${currentTab === "Upcoming Events"?"":"hidden"}`}>
+              <div className="w-[1200px] min-h-[500px] bg-gray-200 rounded-[10px] p-[15px] border-[1px] border-gray-300 box-border">
+                <div className="text-[18px] text-black ml-[10px] font-bold">Upcoming Events ({userBookedEventsInfoUpComing.length})</div>
+                <div>{userBookedEventsInfoUpComing.toReversed().map((eventInfoMap) => (
+                  <Event_box_my_account eventInfo = {eventInfoMap} key={eventInfoMap.booking_id}/>
+                ))}</div>
+              </div>
+              {/* Upcoming Events Content */}
             </div>
 
             {/* History Events Content */}
             <div className={`w-full min-h-[380px] bg-gray-50 text-black ${currentTab === "History Events"?"":"hidden"}`}>
-              History Events Content
+              <div className="w-[1200px] min-h-[500px] bg-gray-200 rounded-[10px] p-[15px] border-[1px] border-gray-300 box-border">
+                <div className="text-[18px] text-black ml-[10px] font-bold">History Events ({userBookedEventsInfoHistory.length})</div>
+                <div>{userBookedEventsInfoHistory.map((eventInfoMap) => (
+                  <Event_box_my_account eventInfo = {eventInfoMap} key={eventInfoMap.booking_id}/>
+                ))}</div>
+              </div>
+              {/* History Events Content */}
             </div>
 
             {/* My Events Content */}
             <div className={`w-full min-h-[380px] bg-gray-50 text-black ${currentTab === "My Events"?"":"hidden"}`}>
-              My Events Content
+              <div className="w-[1200px] min-h-[500px] bg-gray-200 rounded-[10px] p-[15px] border-[1px] border-gray-300 box-border">
+                <div className="text-[18px] text-black ml-[10px] font-bold">My Events ({eventsThatProvidedByTheUser.length})</div>
+                <div>{eventsThatProvidedByTheUser.map((eventInfoMap) => (
+                  <Event_box_provider_my_account eventInfo = {eventInfoMap} key={eventInfoMap.event_id}/>
+                ))}</div>
+              </div>
+              {/* My Events Content */}
             </div>
 
 
