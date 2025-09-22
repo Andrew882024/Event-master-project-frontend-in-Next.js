@@ -223,11 +223,12 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
     <Control_broad_new/>
     <title>Upload Event Page</title>
     <div className="absolute top-[70px] min-h-[1000px] w-full bg-gray-50 ">
-      <div className="flex justify-center text-center">
-      <div className=" text-[30px] text-gray-900 font-Nunito mt-[10px] mb-[20px] ml-[]">Create New Event</div>
+      <div className="flex flex-col justify-center text-center mb-[20px]">
+        <div className=" text-[30px] text-gray-900 font-bold mt-[10px]  mr-[10px]">Create New Event</div>
+        <div className="text-[18px] text-gray-500 ">Share your event with the student community</div>
       </div>
       <div className="flex justify-center">
-      <div className="w-[800px] bg-gray-200 rounded-[20px] min-h-[800px] mb-[100px] box-border shadow-lg">
+      <div className="w-[800px] bg-gray-100 rounded-[20px] min-h-[800px] mb-[100px] box-border border-[1px] border-gray-300 shadow-lg">
 
 {/*//////////////////////////////////////////////////// image picker ///////////////////////////////////////////////////////*/}
         <div className='text-[25px] text-blue-600 mt-[20px] mb-[5px] ml-[30px]'>Upload image</div>
@@ -254,22 +255,31 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
 {/*//////////////////////////////////////////////////// event info small 1 ///////////////////////////////////////////////////////*/}
 <div>
     <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Title:</div>
-    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-100 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
       onChange={(e) => set_event_title(e.target.value)} placeholder="please enter your event title"/>
 </div>
 <div>
     <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Type:</div>
-    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
-      onChange={(e) => set_event_type(e.target.value)} placeholder="please enter your event type"/>
+    {/* <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-100 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+      onChange={(e) => set_event_type(e.target.value)} placeholder="please enter your event type"/> */}
+    <select className="ml-[40px] w-[200px] h-[40px] mb-[5px] bg-gray-100 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+      onChange={(e) => set_event_type(e.target.value)} defaultValue={"empty"}>
+      <option value="empty" disabled></option>
+      <option value="Workshop">Workshop</option>
+      <option value="Show">Show</option>
+      <option value="Music">Music</option>
+      <option value="Sports">Sports</option>
+      <option value="Others">Others</option>
+    </select>
 </div>
 <div>
     <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Provider&apos;s Name:</div>
-    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+    <input type="text" className="ml-[40px] w-[500px] h-[40px] mb-[5px] bg-gray-100 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
       onChange={(e) => set_event_provider_name(e.target.value)} placeholder="please enter event provider's name"/>
 </div>
 <div>
     <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Location:</div>
-    <input type="text" className="ml-[40px] w-[700px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
+    <input type="text" className="ml-[40px] w-[700px] h-[40px] mb-[5px] bg-gray-100 text-black text-[20px] p-2 outline-none border-b-[2px] border-gray-900 focus:border-blue-600" 
       onChange={(e) => set_event_location(e.target.value)} placeholder="please enter event location"/>
 </div>
 
@@ -282,7 +292,7 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
           <div className="text-[20px] text-gray-900 font-Nunito mt-[0px] mb-[5px] ml-[30px]">Start Date and Time:</div>
           <div className="ml-[30px] ">
             <div>
-              <DateTimePicker onChange={onChange} value={value} className={"text-[20px] w-[400px] ml-[10px] h-[40px] bg-gray-200 text-black "}  minDate={new Date()} />
+              <DateTimePicker onChange={onChange} value={value} className={"text-[20px] w-[400px] ml-[10px] h-[40px] bg-gray-100 text-black "}  minDate={new Date()} />
               <div className="text-black" >Selected date and time: {value ? value.toString() : 'None'}</div>                
             </div>
           </div>
@@ -290,7 +300,7 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
 
         <div>
           <div className='text-[20px] text-gray-900 mt-[0px] mb-[5px] ml-[30px]'>Lasting Time In Minutes:</div>
-          <input type="number" className="ml-[40px] w-[100px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-[1px] rounded-[15px] border-gray-900 focus:border-blue-600" 
+          <input type="number" className="ml-[40px] w-[100px] h-[40px] mb-[5px] bg-gray-100 text-black text-[20px] p-2 outline-none border-[1px] rounded-[15px] border-gray-900 focus:border-blue-600" 
             onChange={(e) => set_event_lasting_time_in_minutes(Number(e.target.value))} placeholder="0"/>
         </div>
       </div>
@@ -299,13 +309,13 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
 {/*//////////////////////////////////////////////////// event info small 2 ///////////////////////////////////////////////////////*/}
 <div>
     <div className='text-[20px] text-gray-900 mt-[15px] mb-[0px] ml-[30px]'>Total Ticket Number:</div>
-    <input type="number" className="ml-[40px] w-[100px] h-[40px] mb-[5px] bg-gray-200 text-black text-[20px] p-2 outline-none border-[1px] rounded-[15px] border-gray-900 focus:border-blue-600" 
+    <input type="number" className="ml-[40px] w-[100px] h-[40px] mb-[5px] bg-gray-100 text-black text-[20px] p-2 outline-none border-[1px] rounded-[15px] border-gray-900 focus:border-blue-600" 
       onChange={(e) => set_event_total_ticket_number(Number(e.target.value))} placeholder="0"/>
 </div>
 
 <div>
     <div className='text-[20px] text-gray-900 mt-[15px] mb-[5px] ml-[30px]'>Description:</div>
-    <textarea className="ml-[40px] w-[700px] min-h-[100px] mb-[5px] bg-gray-200 text-black text-[15px] p-[15px] outline-none border-[2px] pb-[30px] border-gray-900 rounded-[15px] focus:border-blue-600" 
+    <textarea className="ml-[40px] w-[700px] min-h-[100px] mb-[5px] bg-gray-100 text-black text-[15px] p-[15px] outline-none border-[2px] pb-[30px] border-gray-900 rounded-[15px] focus:border-blue-600" 
       onChange={(e) => {
         set_event_description(e.target.value);
         set_description_word_count(e.target.value.length);

@@ -38,23 +38,23 @@ const Events_page = () =>{
     <title>Events Page</title>
     <div className="absolute top-[70px] min-h-[1000px] w-full bg-gray-50 flex justify-center">
       <div>
-        <div className="text-[35px] font-bold text-gray-900 mt-[5px] ml-[10px]">Campus Events</div>
-        <div className="text-[15px] text-gray-500 mb-[25px] ml-[10px]">Discover the latest events happening on campus. From workshops to shows, find something that piques your interest!</div>
+        <div className="text-[35px] font-bold text-gray-900 mt-[15px] ml-[20px]">Campus Events</div>
+        <div className="text-[15px] text-gray-500 mb-[25px] ml-[20px]">Discover the latest events happening on campus. From workshops to shows, find something that piques your interest!</div>
         {/* filter */}
-        <div className="ml-[10px] w-[1205px] h-[170px] bg-gray-100 mt-[10px] mb-[20px] border-[1px] border-gray-400 rounded-[20px] box-border">
-        <div className=" mt-[10px] ml-[25px] mb-[10px]"> 
+        <div className="ml-[18px] w-[1180px] h-[150px] bg-gray-100 mt-[10px] mb-[10px] border-[1px] border-gray-300 rounded-[10px] box-border shadow-sm">
+        <div className=" mt-[5px] ml-[20px] mb-[0px]"> 
           <Filter className="inline-block w-[20px] h-[20px] mr-[5px] mt-[-7px] text-gray-900"/> 
           <div className="inline-block text-[18px] text-gray-900 font-bold m-[10px]">Events Filter</div>
         </div>
         {/* filter tabs */}
-        <div className="mt-[25px] flex">
+        <div className="mt-[25px] ml-[-5px] flex">
           {/* left part */}
           <div className=" ml-[25px]">
             <div className=" text-[14px] text-gray-500 mb-[0px]">Filter by event type:</div>
             {/* tabs */}
             <ul className="mt-[5px] ml-[5px] mb-[10px] h-[27px] w-[900px] bg-gray-200 rounded-[5px] flex justify-center items-center gap-[5px] border-[1px] border-gray-300 box-border">
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "All Events"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("All Events")}}>All Events</li>
-                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Work Shop"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Workshop")}}>Workshop</li>
+                <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "WorkShop"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Workshop")}}>Workshop</li>
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Show"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Show")}}>Show</li>
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Music"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Music")}}>Music</li>
                 <li className={`text-[14px] text-gray-900  cursor-pointer hover:text-gray-900 w-[16%] h-[85%] rounded-[5px] inline-flex justify-center items-center ${currentTab === "Sports"?"bg-gray-50":"hover:bg-gray-50/80"}`} onClick={()=>{setCurrentTab("Sports")}}>Sports</li>
@@ -75,7 +75,7 @@ const Events_page = () =>{
       {/* show events */}
       <div className=" w-[1250px] bg-gray-50 rounded-[20px] box-border">
       <div className="  m-[10px]">
-        <div className="text-[15px] text-gray-500 ">{currentSelect}:</div>
+        {/* <div className="text-[15px] text-gray-500 ">{currentSelect}:</div> */}
         <div className=" flex flex-wrap">
         {currentSelect === "Upcoming Events" && (
           <>
