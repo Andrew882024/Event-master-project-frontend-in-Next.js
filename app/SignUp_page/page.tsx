@@ -124,7 +124,7 @@ async function sendSignUpInfo(){
       {/* Title */}
       <div className="flex h-24 w-full items-center justify-center">
         {/* <h1 className="text-3xl font-bold tracking-widest text-white">Sign Up Page</h1> */}
-        <img src={"/Event Master icon.png"} className="w-[250px] h-[50px] mr-[0px] mix-blend-multiply"/>
+        <img src={"/Event Master icon.png"} className="w-[250px] h-[50px] mr-[10px] mix-blend-multiply"/>
       </div>
 
       {/* Sign-up section */}
