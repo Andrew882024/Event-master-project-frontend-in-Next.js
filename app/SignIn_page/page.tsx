@@ -31,6 +31,10 @@ export default function SignIn_page() {
 
   const tryToSignIn = async () => {
     try{
+      if(localStorage.getItem("JWT_access_token_Info") !== null){
+        alert("You are already signed in, please sign out first if you want to sign in with another account");
+        return;
+      }
       if (email === "") {
         alert("email can not be empty, please enter your email");
         return;
@@ -52,18 +56,19 @@ export default function SignIn_page() {
         alert("emailAndPasswordDoesNotMatch, please try again");
         return;
       }
-      if (output.status === "SuccessfullySignedIn") {
-        alert("you are signed in (Functionality not implemented)");
-        //router.push("/");
-        return;
-      }
+      // if (output.status === "SuccessfullySignedIn") {
+      //   alert("you are signed in successfully, welcome back! :) \nYou will be redirected to the home page.");
+      //   router.push("/");
+      //   return;
+      // }
       if (output.status === "signInFailed") {
         alert("there is an error, signInFailed , please try again");
         return;
       }
-      alert("you are signed in (Functionality not implemented)");
+      alert("you are signed in successfully, welcome back! :) \nYou will be redirected to the home page.");
       console.log(output);
       localStorage.setItem("JWT_access_token_Info", JSON.stringify(output));
+      router.push("/");
 
       //output:{access_token, token_type, expires_in, user:{user_id, username, email, roles[]}}
 

@@ -33,6 +33,7 @@ const jwtInfo =
     : null;
 
 const user_id: number | null = jwtInfo?.user?.user_id ?? null;
+const user_role: string[] | null = jwtInfo?.user?.roles ?? null;
 
 type ValuePiece = Date | null;
 
@@ -86,8 +87,12 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       }
       if(user_id === null){
         console.warn("user_id is null");
-        alert('user_id is null, something is wrong');
-        return;
+        throw new Error("user_id is null, please log in first");
+      }
+      if(user_role === null || !user_role.includes("EventProvider")){
+        console.warn("user_role is null or not event_provider");
+        alert("user_role is null or not event_provider, please log in as event provider first");
+        throw new Error("user_role is null or not event_provider, please log in as event provider first");
       }
       const localTime = new Date((value as Date).getTime() - 7 * 60 * 60 * 1000); // Convert to UTC by subtracting 7 hours
       const creating_event_info: Creating_Event_info = {
@@ -104,7 +109,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       };
   
       try {
-        alert(`time that picked up: ${localTime.toISOString().slice(0, 19)}`);
+        //alert(`time that picked up: ${localTime.toISOString().slice(0, 19)}`);
         const res = await fetch("http://localhost:8000/test_datetime", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtInfo.access_token}`, },
@@ -150,18 +155,28 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
   });// 5MB
   
   const handleImageSubmit = async () => {
+    if(user_id === null){
+      throw new Error("user_id is null, please log in first");
+    }
+
+    if(user_role === null || !user_role.includes("EventProvider")){
+        console.warn("user_role is null or not event_provider");
+        alert("user_role is null or not event_provider, please log in as event provider first");
+        throw new Error("user_role is null or not event_provider, please log in as event provider first");
+      }
+
     if (!files?.length) return;
   
     const res = await fetch("http://localhost:8000/upload-url", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtInfo.access_token}`, },
       body: JSON.stringify({ filename: files[0].name, content_type: files[0].type }),
     });
 
     const { url, fields } = await res.json();
 
     set_event_image_uuid_from_backend(fields.key);
-    alert(fields.key+"test1");
+    //alert(fields.key+"test1");
     const formData = new FormData();
     //files.forEach(file => formData.append('file', file));
     const file = files[0];
@@ -348,17 +363,23 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
               alert("you need to upload a image")
               return;
             }
+            if(localStorage.getItem("JWT_access_token_Info")===null){
+              alert("you are not logged in, please log in first");
+              return;
+            }
             try{
               const imageurlholder = await handleImageSubmit();  
               console.log("test:"+event_image_uuid_from_backend);
               await handleSubmitDate(imageurlholder as string);   
             }
-            catch{
+            catch(e){
               alert("submition failed, something is wrong");
               return;
             }
 
-            alert("submition succeed");
+            alert("submition succeed, redirecting to Events page");
+            // window.location.reload();
+            window.location.href = "/Events_page"; 
           }}
         >
           Submit

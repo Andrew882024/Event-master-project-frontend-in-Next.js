@@ -13,6 +13,7 @@ import Control_broad_new from "@/src/component/Control_broad_new";
 
 
 export const Eventdetail_page = ({eventInfor = EventInfoFromDBDefault}:{eventInfor?:EventInfoFromDB}) =>{
+  
   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
     queryKey: ['EventInfoFromDB'],
     queryFn: fetchEventInfoFromDB,
@@ -61,11 +62,19 @@ const key = eventInfor.event_imageUrl;
 //////////////////////////////////////////handle ticket booking////////////////////////////////////////
 
 const handleBooking = async() =>{
+  if(eventInfor.event_start_date_and_time < new Date()){
+    alert("This event has already started or ended, you cannot book the ticket for this event anymore.");
+    return;
+  }
+
+  if(localStorage.getItem("JWT_access_token_Info") === null){
+    alert("You need to sign in first to book the ticket for this event");
+    return;
+  }
+  
   const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
   const user_id:number = jwtInfo.user.user_id;
   const event_id:number = eventInfor.id;
-  alert(`the user id is: ${user_id}, the event id is: ${event_id}`);
-  alert(serverUrl+'/bookTicket');
 
   const res = await fetch(serverUrl+'/bookTicket', {
     method: 'POST',
@@ -83,7 +92,7 @@ const handleBooking = async() =>{
   }
   const output = await res.json();
   if(output.status === "SuccessfullyBookedTicket"){
-    alert("You have successfully booked the ticket for this event, you can check it in your Account page(not implemented yet),\n you will also receive a confirmation email with the ticket details.");
+    alert("You have successfully booked the ticket for this event, you can check it in your Account page,\n you will also receive a confirmation email with the ticket details.");
     window.location.reload();
     return;
   }
@@ -141,7 +150,7 @@ const handleBooking = async() =>{
               <div className=" w-[100%] ">
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Total seats: ${eventInfor.event_total_ticket_number}`}</div>
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Available seats: ${eventInfor.event_remaining_ticket_number}`}</div>
-                <div className=" w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px]" onClick={handleBooking}>Join Event</div>
+                <div className={`w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px] ${eventInfor.event_start_date_and_time < new Date() ? " hidden" : ""}`} onClick={handleBooking}>Join Event</div>
               </div>
             </div>
           </div>

@@ -136,10 +136,19 @@ const MyAccount_page = () =>{
                           Member Since: {userInfo?.created_at ? new Date(userInfo.created_at).toLocaleDateString("en-US", {month: "long",day: "numeric",year: "numeric",}) : ""}
                         </div>
                       </div>
-                      <button className="ml-[-350px] w-[100px] h-[30px] bg-blue-500 text-white text-[14px] rounded-[5px] mt-[10px] hover:bg-blue-600 transition duration-200 ease-in-out cursor-pointer" onClick={()=>{alert("This function is not available yet.")}}>
-                        <Settings className="inline-flex ml-[0px] mr-[5px] h-[16px] w-[16px] mt-[-3px] cursor-pointer items-center justify-center"/>
-                        Edit Profile
-                      </button>
+                      <div className="w-full h-[30px] mt-[0px] flex">
+                        <button className="ml-[0px] w-[100px] h-[30px] bg-blue-500 text-white text-[14px] rounded-[5px] mt-[10px] hover:bg-blue-600 transition duration-200 ease-in-out cursor-pointer" onClick={()=>{alert("This function is not available yet.")}}>
+                          <Settings className="inline-flex ml-[0px] mr-[5px] h-[16px] w-[16px] mt-[-3px] cursor-pointer items-center justify-center"/>
+                          Edit Profile
+                        </button>
+                        <button className="ml-[20px] w-[100px] h-[30px] bg-gray-50 text-gray-900 text-[14px] rounded-[5px] mt-[10px] border-[1px] border-gray-600 box-border hover:shadow-lg  cursor-pointer" onClick={()=>{
+                          localStorage.removeItem("JWT_access_token_Info");
+                          alert("You have successfully signed out, you will be redirected to the home page.");
+                          window.location.href = "/";
+                        }}>
+                          Sign out
+                        </button>
+                      </div>
                     </div>
 
                     <div className="w-[40%] h-full inline-flex flex-col justify-start items-start">
