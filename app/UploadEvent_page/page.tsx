@@ -16,6 +16,7 @@ import {useDropzone} from 'react-dropzone'
 import { EventInfo } from "@/src/data/sampleData";
 import {Preview_eventdetail_page} from "../../src/component/big_component/Preview_detail_page";
 import { FullScreenPreview } from "@/src/component/big_component/FullScreenPreview";
+import toast from "react-hot-toast";
 
 // const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
 // const user_id:number = jwtInfo.user.user_id;
@@ -82,7 +83,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       const handleSubmitDate = async (imageurl:string) => {
       if (!isValidDate) {
         console.warn("date is empty or wrong, try again");
-        alert('date is empty or wrong, try again');
+        toast.error('date is empty or wrong, try again', { duration: 5000 });
         return;
       }
       if(user_id === null){
@@ -91,7 +92,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       }
       if(user_role === null || !user_role.includes("EventProvider")){
         console.warn("user_role is null or not event_provider");
-        alert("user_role is null or not event_provider, please log in as event provider first");
+        toast.error("user_role is null or not event_provider, please log in as event provider first", { duration: 5000 });
         throw new Error("user_role is null or not event_provider, please log in as event provider first");
       }
       const localTime = new Date((value as Date).getTime() - 7 * 60 * 60 * 1000); // Convert to UTC by subtracting 7 hours
@@ -109,7 +110,6 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       };
   
       try {
-        //alert(`time that picked up: ${localTime.toISOString().slice(0, 19)}`);
         const res = await fetch("http://localhost:8000/test_datetime", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtInfo.access_token}`, },
@@ -136,7 +136,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       
       if (rejectedFiles?.length) {
         setRejected(previousFiles => [...rejectedFiles]);
-        alert(rejectedFiles[0].errors[0].message);
+        toast.error(rejectedFiles[0].errors[0].message, { duration: 5000 });
       }
       console.log(acceptedFiles);
       if (acceptedFiles.length) {
@@ -161,7 +161,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
 
     if(user_role === null || !user_role.includes("EventProvider")){
         console.warn("user_role is null or not event_provider");
-        alert("user_role is null or not event_provider, please log in as event provider first");
+        toast.error("user_role is null or not does include EventProvider, please log in as event provider first", { duration: 5000 });
         throw new Error("user_role is null or not event_provider, please log in as event provider first");
       }
 
@@ -176,9 +176,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
     const { url, fields } = await res.json();
 
     set_event_image_uuid_from_backend(fields.key);
-    //alert(fields.key+"test1");
     const formData = new FormData();
-    //files.forEach(file => formData.append('file', file));
     const file = files[0];
     Object.entries(fields).forEach(([k, v]) => formData.append(k, v as string)); // adds 'key'
     formData.append("file", file);
@@ -193,7 +191,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
     const data = await fetch(cloudinaryUrl, {
       method: 'POST',
       body: formData
-     })//.then(res => res.json());
+     })
     if (data.status !== 204) {
       alert('Uploading image failed.');
       throw new Error('Uploading image failed.');
@@ -348,23 +346,23 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
           onClick={async () => {
 
             if(event_type==="empty"||event_title==="empty"||event_provider_name==="empty"||event_location==="empty"||event_description==="empty"){
-              alert("some event info is empty, please check again");
+              toast.error("some event Information is empty, please check again", { duration: 5000 });
               return;
             }
             else if(event_lasting_time_in_minutes<=0||event_total_ticket_number<=0){
-              alert("event lasting time and event total ticket number cannot be less or equal to 0")
+              toast.error("event lasting time and event total ticket number cannot be less or equal to 0", { duration: 5000 });
               return;
             }
             else if(description_word_count>10000){
-              alert("description should have no more than 10000 character")
+              toast.error("description should have no more than 10000 character", { duration: 5000 });
               return;
             }
             else if(files.length <= 0){
-              alert("you need to upload a image")
+              toast.error("you need to upload a image", { duration: 5000 });
               return;
             }
             if(localStorage.getItem("JWT_access_token_Info")===null){
-              alert("you are not logged in, please log in first");
+              toast.error("you are not logged in, please log in first", { duration: 5000 });
               return;
             }
             try{
@@ -373,12 +371,12 @@ const [showPreview, setShowPreview] = useState<boolean>(false);
               await handleSubmitDate(imageurlholder as string);   
             }
             catch(e){
-              alert("submition failed, something is wrong");
+              toast.error("submition failed, something is wrong", { duration: 5000 });
               return;
             }
 
-            alert("submition succeed, redirecting to Events page");
-            // window.location.reload();
+            toast.success("submition succeed, redirecting to Events page", { duration: 5000 });
+            await new Promise(resolve => setTimeout(resolve, 3000)); // wait for 3 seconds
             window.location.href = "/Events_page"; 
           }}
         >

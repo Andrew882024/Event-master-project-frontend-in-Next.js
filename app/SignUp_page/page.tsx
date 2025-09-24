@@ -14,6 +14,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { serverUrl } from "@/src/data/severUrl";
+import toast from "react-hot-toast";
 
 /**
  * Notes:
@@ -43,11 +44,11 @@ async function sendVerificationCode() {
   const output = await res.json();
   console.log(output.ok);
   if(!(output.ok === "True")){
-    alert("There is an error, please try again");
+    toast.error("There is an error, please try again", {duration: 5000});
     return;
   }
   else{
-    alert("A verification code has been sent to your email. Please check your email.");
+    toast("A verification code has been sent to your email. Please check your email.", {duration: 5000});
     return;
   }  
 }
@@ -55,19 +56,19 @@ async function sendVerificationCode() {
 ////////////////////////////////////////////////////send signUp info to backend///////////////////////////////////////////////////////
 async function sendSignUpInfo(){
   if(username === ""){
-    alert("username can not be empty, please enter your username");
+    toast.error("username can not be empty, please enter your username", {duration: 5000});
     return;
   }
   if(verificationCode === ""){
-    alert("verification code can not be empty, please enter the verification code we sent to your email");
+    toast.error("verification code can not be empty, please enter the verification code we sent to your email", {duration: 5000});
     return;
   }
   if(email === ""){
-    alert("email can not be empty, please enter your email");
+    toast.error("email can not be empty, please enter your email", {duration: 5000});
     return;
   }
   if(password === ""){
-    alert("password can not be empty, please enter your password");
+    toast.error("password can not be empty, please enter your password", {duration: 5000});
     return;
   }
   const res = await fetch(`${serverUrl}/signUp`,{
@@ -77,39 +78,38 @@ async function sendSignUpInfo(){
   })
   const output = await res.json();
   if(output.status === "incorrectVerificationCode"){
-    alert("the verification code is incorrect, please try again");
+    toast.error("the verification code is incorrect, please try again", {duration: 5000});
     return;
   }
   if(output.status === "emailAlreadyExists"){
-    alert("this email already exists, try signing in or use another email to sign up");
+    toast.error("this email already exists, try signing in or use another email to sign up", {duration: 5000});
     return;
   }
   if(output.status === "signUpFailed"){
-    alert("there is an error, signUpFailed , please try again");
+    toast.error("there is an error, signUpFailed , please try again", {duration: 5000});
     return;
   }
   if(output.status === "emailAlreadyExists"){
-    alert("this email already exists, try signing in or use another email to sign up");
+    toast.error("this email already exists, try signing in or use another email to sign up", {duration: 5000});
     return;
   }
   if(output.status === "usernameAlreadyExists"){
-    alert("this username already exists, try using another username");
+    toast.error("this username already exists, try using another username", {duration: 5000});
     return;
   }
   if(output.status === "SuccessfullySignedUp"){
-    alert("you are signed up (Functionality not implemented)");
-    //router.push("/SignIn_page");
+    toast.success("you are signed up", {duration: 5000});
     return;
   }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   function validateInputs() {
     if (!/[0-9]/.test(password)) {
-      alert("invalid password, your password should have at least one number");
+      toast.error("invalid password, your password should have at least one number", {duration: 5000});
       return false;
     }
     if (password.includes(" ")) {
-      alert("invalid password, your password should not include space in it");
+      toast.error("invalid password, your password should not include space in it", {duration: 5000});
       return false;
     }
     return true;
@@ -169,11 +169,11 @@ async function sendSignUpInfo(){
               className="ml-2 w-[25%] h-[35px] bg-blue-600 text-white rounded-[5px] hover:bg-blue-700 cursor-pointer"
               onClick={() => {
                 if(email === "" ){
-                  alert("please enter a valid email address first");
+                  toast.error("please enter a valid email address first", {duration: 5000});
                   return;
                 }
                 if(email.indexOf("@") === -1 || email.indexOf(".") === -1 || email.length < 5){
-                  alert("please enter a valid email address first");
+                  toast.error("please enter a valid email address first", {duration: 5000});
                   return;
                 }
                 else{
@@ -182,7 +182,7 @@ async function sendSignUpInfo(){
                   }
                   catch(err){
                     console.error(err);
-                    alert("Network error. Please try again.");
+                    toast.error("Network error. Please try again.", {duration: 5000});
                     return;
                   }
                   return;

@@ -143,7 +143,7 @@ const MyAccount_page = () =>{
                         </div>
                       </div>
                       <div className="w-full h-[30px] mt-[0px] flex">
-                        <button className="ml-[0px] w-[100px] h-[30px] bg-blue-500 text-white text-[14px] rounded-[5px] mt-[10px] hover:bg-blue-600 transition duration-200 ease-in-out cursor-pointer" onClick={()=>{alert("This function is not available yet.")}}>
+                        <button className="ml-[0px] w-[100px] h-[30px] bg-blue-500 text-white text-[14px] rounded-[5px] mt-[10px] hover:bg-blue-600 transition duration-200 ease-in-out cursor-pointer" onClick={()=>{toast("This function is not available yet.")}}>
                           <Settings className="inline-flex ml-[0px] mr-[5px] h-[16px] w-[16px] mt-[-3px] cursor-pointer items-center justify-center"/>
                           Edit Profile
                         </button>

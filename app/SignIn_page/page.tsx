@@ -57,11 +57,6 @@ export default function SignIn_page() {
         toast.error("email and password do not match, please try again", {duration: 5000});
         return;
       }
-      // if (output.status === "SuccessfullySignedIn") {
-      //   alert("you are signed in successfully, welcome back! :) \nYou will be redirected to the home page.");
-      //   router.push("/");
-      //   return;
-      // }
       if (output.status === "signInFailed") {
         toast.error("Sign in failed, please try again later", {duration: 5000});
         return;
@@ -70,14 +65,11 @@ export default function SignIn_page() {
       console.log(output);
       localStorage.setItem("JWT_access_token_Info", JSON.stringify(output));
 
-      //output:{access_token, token_type, expires_in, user:{user_id, username, email, roles[]}}
-
-      //console.log("test localStorage username"+localStorage.getItem("user_name"));
       return;
     }
     catch (error) {
       console.error("Error during sign-in:", error);
-      alert("An error occurred during sign-in. Please try again later.");
+      toast.error("An error occurred during sign-in. Please try again later.", {duration: 5000});
     }
     finally {
       setBusy(false);
