@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { serverUrl } from "@/src/data/severUrl";
 import Control_broad_new from "@/src/component/Control_broad_new";
+import toast from "react-hot-toast";
 
 //style={{backgroundImage: "url('/UCSD_1.webp')", backgroundSize: 'cover'}}
 
@@ -63,12 +64,14 @@ const key = eventInfor.event_imageUrl;
 
 const handleBooking = async() =>{
   if(eventInfor.event_start_date_and_time < new Date()){
-    alert("This event has already started or ended, you cannot book the ticket for this event anymore.");
+    toast.dismiss();
+    toast.error("This event has already started or ended, you cannot book the ticket for this event anymore.");
     return;
   }
 
   if(localStorage.getItem("JWT_access_token_Info") === null){
-    alert("You need to sign in first to book the ticket for this event");
+    toast.dismiss();
+    toast.error("You need to sign in first to book the ticket for this event");
     return;
   }
   
@@ -87,13 +90,17 @@ const handleBooking = async() =>{
 
   if (!res.ok) {
     const errorText = await res.json();
-    alert(`There is an error: ${errorText.detail}, please try again`);
+    toast.error(`There is an error: ${errorText.detail}, please try again`);
     return;
   }
   const output = await res.json();
   if(output.status === "SuccessfullyBookedTicket"){
-    alert("You have successfully booked the ticket for this event, you can check it in your Account page,\n you will also receive a confirmation email with the ticket details.");
-    window.location.reload();
+    toast.dismiss();
+    toast.success("Booking succeed", {duration: 5000});
+    toast("You have successfully booked the ticket for this event, you can check it in your Account page,\n\n (you will also receive a confirmation email with the ticket details.)", {duration: 5000});
+    await new Promise((resolve) => setTimeout(resolve, 5500));
+    toast.dismiss();
+    window.location.reload(); 
     return;
   }
 }
@@ -150,7 +157,13 @@ const handleBooking = async() =>{
               <div className=" w-[100%] ">
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Total seats: ${eventInfor.event_total_ticket_number}`}</div>
                 <div className="text-gray-600 text-[18px] ml-[20px] font-Nunito">{`Available seats: ${eventInfor.event_remaining_ticket_number}`}</div>
-                <div className={`w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px] ${eventInfor.event_start_date_and_time < new Date() ? " hidden" : ""}`} onClick={handleBooking}>Join Event</div>
+                <div className={`w-[300px] h-[60px] text-[21px] rounded-[15px] flex items-center justify-center  font-bold cursor-pointer bg-[#ffcd00] text-[#05618c] hover:shadow-lg transition duration-200 ease-in-out mt-[15px] ${eventInfor.event_start_date_and_time < new Date() ? " hidden" : ""}`} onClick={async()=>{
+                    
+                      toast("Processing your booking...", {duration: 5000});
+                      handleBooking();
+                      
+                    }
+                  }>Join Event</div>
               </div>
             </div>
           </div>

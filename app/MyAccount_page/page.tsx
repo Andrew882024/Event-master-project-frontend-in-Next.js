@@ -7,6 +7,7 @@ import { User, Mail, Hash, Shield, Calendar, Clock, MapPin, Users, Edit3, Trash2
 import { UserInfoMyAccount, UserBookedEventsInfoMyAccount, EventsThatProvidedByTheUserMyAccount } from "@/src/data/dataForMyAccount";
 import Event_box_my_account from "@/src/component/small_element/Event_box_my_account";
 import Event_box_provider_my_account from "@/src/component/small_element/Event_box_provider_my_account";
+import toast from "react-hot-toast";
 
 
 
@@ -20,10 +21,15 @@ const MyAccount_page = () =>{
  
   const ran = useRef(false);
   useEffect(() => {
+    (async () => {
+    if(localStorage.getItem("JWT_access_token_Info") === null){
+      toast.error("You are not signed in, please sign in first.", {duration: 3000});
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      window.location.href = "/";
+      return;
+    }})();
 
     if(localStorage.getItem("JWT_access_token_Info") === null){
-      alert("You are not signed in, please sign in first.");
-      window.location.href = "/";
       return;
     }
 
@@ -141,9 +147,10 @@ const MyAccount_page = () =>{
                           <Settings className="inline-flex ml-[0px] mr-[5px] h-[16px] w-[16px] mt-[-3px] cursor-pointer items-center justify-center"/>
                           Edit Profile
                         </button>
-                        <button className="ml-[20px] w-[100px] h-[30px] bg-gray-50 text-gray-900 text-[14px] rounded-[5px] mt-[10px] border-[1px] border-gray-600 box-border hover:shadow-lg  cursor-pointer" onClick={()=>{
+                        <button className="ml-[20px] w-[100px] h-[30px] bg-gray-50 text-gray-900 text-[14px] rounded-[5px] mt-[10px] border-[1px] border-gray-600 box-border hover:shadow-lg  cursor-pointer" onClick={async()=>{
                           localStorage.removeItem("JWT_access_token_Info");
-                          alert("You have successfully signed out, you will be redirected to the home page.");
+                          toast.success("You have successfully signed out, you will be redirected to the home page.", {duration: 3000});
+                          await new Promise((resolve) => setTimeout(resolve, 3000));
                           window.location.href = "/";
                         }}>
                           Sign out

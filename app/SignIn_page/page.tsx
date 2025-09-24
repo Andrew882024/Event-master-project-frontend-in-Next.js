@@ -13,6 +13,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 /**
  * Notes:
@@ -32,15 +33,15 @@ export default function SignIn_page() {
   const tryToSignIn = async () => {
     try{
       if(localStorage.getItem("JWT_access_token_Info") !== null){
-        alert("You are already signed in, please sign out first if you want to sign in with another account");
+        toast.error("You are already signed in, please sign out first if you want to sign in with another account", {duration: 5000});
         return;
       }
       if (email === "") {
-        alert("email can not be empty, please enter your email");
+        toast.error("email can not be empty, please enter your email", {duration: 5000});
         return;
       }
       if (password === "") {
-        alert("password can not be empty, please enter your password");
+        toast.error("password can not be empty, please enter your password", {duration: 5000});
         return;
       }
       setBusy(true);
@@ -53,7 +54,7 @@ export default function SignIn_page() {
       const output = await res.json();
       
       if (output.status === "emailAndPasswordDoesNotMatch") {
-        alert("emailAndPasswordDoesNotMatch, please try again");
+        toast.error("email and password do not match, please try again", {duration: 5000});
         return;
       }
       // if (output.status === "SuccessfullySignedIn") {
@@ -62,13 +63,12 @@ export default function SignIn_page() {
       //   return;
       // }
       if (output.status === "signInFailed") {
-        alert("there is an error, signInFailed , please try again");
+        toast.error("Sign in failed, please try again later", {duration: 5000});
         return;
       }
-      alert("you are signed in successfully, welcome back! :) \nYou will be redirected to the home page.");
+      toast.success("you are signed in successfully, welcome back! :)", {duration: 5000});
       console.log(output);
       localStorage.setItem("JWT_access_token_Info", JSON.stringify(output));
-      router.push("/");
 
       //output:{access_token, token_type, expires_in, user:{user_id, username, email, roles[]}}
 

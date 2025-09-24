@@ -33,13 +33,13 @@ const Index_page = () => {
       
 
       <div className="text-center text-[25px] font-bold text-gray-900">Upcoming Events</div>
-        <div className="text-center text-[15px] text-gray-600 mb-[20px]">Don't miss out on these popular events happening soon on campus</div>
+        <div className="text-center text-[15px] text-gray-600 mb-[20px]">Don&apos;t miss out on these popular events happening soon on campus</div>
         
         <Event_box_cluster_home />
         <div className="w-full h-[200px] bg-blue-50 mt-[50px] flex flex-col items-center justify-center">
           <div className="text-[28px] font-bold text-gray-900 mb-[10px]">Ready to Host Your Own Event?</div>
           <div className="text-[18px] text-gray-500 mb-[20px]">Join our community of event organizers and share your passion with others.</div>
-          <Link href="/SignUp_page" className="inline-flex bg-blue-500 hover:bg-blue-600 duration-200 ease-in-out text-white text-[18px] justify-center items-center px-[20px] py-[7px] rounded-[5px] cursor-pointer">
+          <Link href="/UploadEvent_page" className="inline-flex bg-blue-500 hover:bg-blue-600 duration-200 ease-in-out text-white text-[18px] justify-center items-center px-[20px] py-[7px] rounded-[5px] cursor-pointer">
             <button className="cursor-pointer">Upload Events</button>
           </Link>
         </div>
