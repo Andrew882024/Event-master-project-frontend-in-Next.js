@@ -83,7 +83,7 @@ const key = eventInfor.eventImage;
           <img src={src||"/default1.png"} alt="Event Image" className="w-full h-full transition-transform duration-300 object-cover ease-in-out group-hover:scale-105 " />
         </div>
 
-        <div className="absolute left-[10px] bottom-[20px] h-[80px] w-[500px]">
+        <div className="absolute left-[0px] bottom-[20px] h-[80px] w-[800px]">
           <div className=" text-[30px] font-bold text-white ml-[10px]">{eventInfor.eventName}</div>
           <div className="flex">
             <div className=" text-[16px] text-white mt-[2px] ml-[10px] inline-flex">
