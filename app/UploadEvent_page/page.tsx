@@ -1,25 +1,18 @@
 "use client";
 import Control_broad_new from "@/src/component/Control_broad_new";
-//import Event_info_picker from "@/src/component/Event_info_picker";
-//import MyDropzone from "@/src/component/small_element/Upload_image";
-
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import { useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
-
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
-//import { useState } from 'react';
-
 import { EventInfo } from "@/src/data/sampleData";
-import {Preview_eventdetail_page} from "../../src/component/big_component/Preview_detail_page";
+
 import { FullScreenPreview } from "@/src/component/big_component/FullScreenPreview";
 import toast from "react-hot-toast";
 
-// const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
-// const user_id:number = jwtInfo.user.user_id;
+
 
 const jwtInfo =
   typeof window !== "undefined"

@@ -121,7 +121,10 @@ export default function SignIn_page() {
               id="my_remember_checkbox"
               type="checkbox"
               checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
+              onChange={(e) => {
+                setRemember(e.target.checked);
+                toast("Feature not available yet", {duration: 1000});
+              }}
               className="ml-2 scale-125"
             />
             <label htmlFor="my_remember_checkbox" className="ml-1 text-[#666]">
@@ -143,7 +146,7 @@ export default function SignIn_page() {
 
           {/* Links */}
           <div className="mt-5">
-            <a href="#" className="text-[#005bb5]">Forgot password?</a>
+              <a href="#" className="text-[#005bb5]" onClick={()=>{toast("Feature not available yet", {duration: 1000});}}>Forgot password?</a>
             <br />
             <a href="/SignUp_page" className="text-[#005bb5]">New here? Sign up now.</a>
           </div>

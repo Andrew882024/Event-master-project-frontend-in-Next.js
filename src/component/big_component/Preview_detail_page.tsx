@@ -2,9 +2,6 @@ import Control_broad_new from "../Control_broad_new";
 import { EventInfo } from "@/src/data/sampleData";
 import { InPageEventInforDefault, EventInfoList} from "@/src/data/sampleData";
 
-//style={{backgroundImage: "url('/UCSD_1.webp')", backgroundSize: 'cover'}}
-
-
 
 export const Preview_eventdetail_page = ({eventInfor = EventInfoList[0]}:{eventInfor?:EventInfo}) =>{
   return(
