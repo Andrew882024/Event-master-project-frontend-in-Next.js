@@ -67,6 +67,7 @@ const MyAccount_page = () =>{
         setUserBookedEventsInfo(output);
         setUserBookedEventsInfoUpComing(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) >= new Date()));
         setUserBookedEventsInfoHistory(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) < new Date()));
+
       };
 
       const getEventsThatProvidedByTheUser = async() =>{
