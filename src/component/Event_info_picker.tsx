@@ -58,7 +58,7 @@ function Event_info_picker() {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/test_datetime", {
+      const res = await fetch("http://localhost:8000/pick_datetime", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(creating_event_info), // <-- send the payload

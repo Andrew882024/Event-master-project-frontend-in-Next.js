@@ -85,7 +85,7 @@ const Events_page = () =>{
           })}
 
           {/* Example for filtered events, adjust filter logic as needed */}
-          {((currentTab != "All Events")&&currentTab != "Other") && upcomingEvents?.reverse().filter(p => (p.event_type ?? "").trim() === currentTab).toReversed().map((post) => {
+          {((currentTab != "All Events")&&currentTab != "Others") && upcomingEvents?.reverse().filter(p => (p.event_type ?? "").trim() === currentTab).toReversed().map((post) => {
             return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
           })}
 
@@ -104,7 +104,7 @@ const Events_page = () =>{
           })}
 
           {/* Example for filtered events, adjust filter logic as needed */}
-          {((currentTab != "All Events")&&currentTab != "Other") && historyEvents?.filter(p => (p.event_type ?? "").trim() === currentTab).toReversed().map((post) => {
+          {((currentTab != "All Events")&&currentTab != "Others") && historyEvents?.filter(p => (p.event_type ?? "").trim() === currentTab).toReversed().map((post) => {
             return (<Event_box1_db InPageEventInfor={post} key={post.id} />);
           })}
 

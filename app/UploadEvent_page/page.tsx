@@ -103,7 +103,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       };
   
       try {
-        const res = await fetch("http://localhost:8000/test_datetime", {
+        const res = await fetch("http://localhost:8000/pick_datetime", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtInfo.access_token}`, },
           body: JSON.stringify(creating_event_info), // <-- send the payload

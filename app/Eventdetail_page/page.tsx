@@ -144,7 +144,7 @@ const handleBooking = async() =>{
                 {/*Date&time*/}
                 <div className="text-gray-800 text-[18px] font-bold ml-[20px] mt-[10px]">Date&time:</div>
                 <div className="text-gray-600 text-[15px] font-Nunito ml-[25px] mt-[0px] w-[350px] ">{`${new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(eventInfor.event_start_date_and_time)} (${eventInfor.event_start_date_and_time.toLocaleString('en-US', { month: 'short' }).toUpperCase()} ${eventInfor.event_start_date_and_time.getDate().toString()} ${eventInfor.event_start_date_and_time.toLocaleString('en-US', { weekday: 'short' }).toUpperCase()}) `}</div>
-                <div className="text-gray-600 text-[15px] font-Nunito ml-[25px] mt-[0px] w-[350px] ">{`time:${eventInfor.event_start_date_and_time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}-${new Date(eventInfor.event_start_date_and_time.getTime() + eventInfor.event_duration_in_minutes * 60_000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}}`}</div>
+                <div className="text-gray-600 text-[15px] font-Nunito ml-[25px] mt-[0px] w-[350px] ">{`time:${eventInfor.event_start_date_and_time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}-${new Date(eventInfor.event_start_date_and_time.getTime() + eventInfor.event_duration_in_minutes * 60_000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}`}</div>
 
                 {/*Location*/}
                 <div className="text-gray-800 text-[18px] font-bold ml-[20px] mt-[10px]">Location:</div>
