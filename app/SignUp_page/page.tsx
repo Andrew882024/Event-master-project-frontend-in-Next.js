@@ -22,7 +22,7 @@ import toast from "react-hot-toast";
  * 2) To configure the API base, set NEXT_PUBLIC_API_BASE in .env.local.
  */
 const BG_IMAGE = "/UCSD_1.webp"; // place your image at public/img/bg-signup.png
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://18.223.126.55:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || serverUrl;
 
 export default function SignUp_page() {
   const router = useRouter();
