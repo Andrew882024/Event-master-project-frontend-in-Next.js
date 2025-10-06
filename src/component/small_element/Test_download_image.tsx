@@ -1,13 +1,14 @@
 "use client";
 import { useState } from 'react';
 import React from 'react';
+import { serverUrl } from '@/src/data/severUrl';
 
 
 const Test_download_image = () => {
   const [imageName, setImageName] = useState<string | null>(null);
   
   const handleDownload = async (filename: string) => {
-      const res = await fetch(`http://localhost:8000/download-url/${filename}`);
+      const res = await fetch(`${serverUrl}/download-url/${filename}`);
       const { url } = await res.json();
 
       window.open(url, "_blank");

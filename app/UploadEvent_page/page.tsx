@@ -11,6 +11,7 @@ import { EventInfo } from "@/src/data/sampleData";
 
 import { FullScreenPreview } from "@/src/component/big_component/FullScreenPreview";
 import toast from "react-hot-toast";
+import { serverUrl } from "@/src/data/severUrl";
 
 
 
@@ -103,7 +104,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
       };
   
       try {
-        const res = await fetch("http://localhost:8000/pick_datetime", {
+        const res = await fetch(`${serverUrl}/pick_datetime`, {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtInfo.access_token}`, },
           body: JSON.stringify(creating_event_info), // <-- send the payload
@@ -160,7 +161,7 @@ const [event_image_uuid_from_backend, set_event_image_uuid_from_backend] = useSt
 
     if (!files?.length) return;
   
-    const res = await fetch("http://localhost:8000/upload-url", {
+    const res = await fetch(`${serverUrl}/upload-url`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtInfo.access_token}`, },
       body: JSON.stringify({ filename: files[0].name, content_type: files[0].type }),

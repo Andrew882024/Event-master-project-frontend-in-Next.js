@@ -2,6 +2,7 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 import { useState } from 'react';
+import { serverUrl } from '@/src/data/severUrl';
 
 function MyDropzone() {
   // const [files, setFiles] = useState([]);
@@ -45,7 +46,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   if (!files?.length) return;
 
-  const res = await fetch("http://localhost:8000/upload-url", {
+  const res = await fetch(`${serverUrl}/upload-url`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ filename: files[0].name, content_type: files[0].type }),

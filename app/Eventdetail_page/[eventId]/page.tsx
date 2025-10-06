@@ -1,34 +1,3 @@
-// "use client";
-// import Eventdetail_page from "../page";
-// import { EventInfo, EventInfoList } from "../../../src/data/sampleData";
-// import { EventInfoFromDB, fetchEventInfoFromDB } from "@/src/data/dataFromDB";
-// import { useQuery } from "@tanstack/react-query";
-
-// const Eventdetail_for_each_one = async ({ params }: { params: Promise<{ eventId: string }> }) => {
-//   const {data, error,isLoading, isError} = useQuery<EventInfoFromDB[]>({
-//     queryKey: ['EventInfoFromDB'],
-//     queryFn: fetchEventInfoFromDB,
-//     staleTime: 60 * 60 * 1000, // 1 hour
-//     refetchInterval: 60 * 60 * 1000, // 1 hour
-//   });
-
-//   if (isLoading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (isError) {
-//     return <div>Error: {(error as Error).message}</div>;
-//   }
-
-
-//   const wating = await params;
-//   const eventId = (await params).eventId;
-//   const index: number = data?.findIndex(event => event.id === eventId);
-//   if (index === -1) {
-//     return <div>Event not found</div>;
-//   }
-//   return <Eventdetail_page eventInfor={data[index]}/>;
-// };
 "use client";
 
 import { useQuery } from "@tanstack/react-query";

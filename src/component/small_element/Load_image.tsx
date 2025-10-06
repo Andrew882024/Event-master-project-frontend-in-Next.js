@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { serverUrl } from '@/src/data/severUrl';
 
 export default function LoadImage() {
   const key = "d4029c087f39b7215bede3cb55eb4554.jpg";
   const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+    const base = process.env.NEXT_PUBLIC_API_BASE ?? serverUrl;
     const url = `${base}/images/url?key=${encodeURIComponent(key)}&ttl=36000`;
 
     const fetchImage = async () => {

@@ -1,3 +1,4 @@
+import { serverUrl } from "./severUrl";
 
 export type EventInfoFromDB ={
     "event_provider_id": number,
@@ -36,7 +37,7 @@ export type EventInfoFromDB ={
   }
 
   export async function fetchEventInfoFromDB(): Promise<EventInfoFromDB[]> {
-    const res = await fetch('http://localhost:8000/a_page_of_events');
+    const res = await fetch(`${serverUrl}/a_page_of_events`);
     const data = await res.json();
 
     return data.map((item: EventInfoFromDB) => ({

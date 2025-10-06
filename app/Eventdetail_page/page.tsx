@@ -27,7 +27,7 @@ const key = eventInfor.event_imageUrl;
   const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+    const base = process.env.NEXT_PUBLIC_API_BASE ?? serverUrl;
     const url = `${base}/images/url?key=${encodeURIComponent(key)}&ttl=36000`;
 
     const fetchImage = async () => {

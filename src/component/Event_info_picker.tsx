@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import { useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
+import { serverUrl } from '../data/severUrl';
 
 
 
@@ -58,7 +59,7 @@ function Event_info_picker() {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/pick_datetime", {
+      const res = await fetch(`${serverUrl}/pick_datetime`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(creating_event_info), // <-- send the payload

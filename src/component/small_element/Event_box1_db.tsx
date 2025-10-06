@@ -5,6 +5,7 @@ import { InPageEventInforDefault } from "@/src/data/sampleData";
 import { useRouter } from 'next/navigation';
 import { EventInfoFromDB, EventInfoFromDBDefault } from "@/src/data/dataFromDB";
 import React, { useEffect, useState } from "react";
+import { serverUrl } from "@/src/data/severUrl";
 
 
 let InPageEventInfor:EventInfoFromDB;
@@ -43,7 +44,7 @@ const key = eventInfor.eventImage;
   const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+    const base = process.env.NEXT_PUBLIC_API_BASE ?? serverUrl;
     const url = `${base}/images/url?key=${encodeURIComponent(key)}&ttl=36000`;
 
     const fetchImage = async () => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {UserBookedEventsInfoMyAccount,EventsThatProvidedByTheUserMyAccount} from "../../data/dataForMyAccount";
 import { Calendar, Clock, MapPin, Tag } from "lucide-react";
+import { serverUrl } from '@/src/data/severUrl';
 
 //type EventBoxProps = { eventInfo: UserBookedEventsInfoMyAccount };
 let eventInfo:EventsThatProvidedByTheUserMyAccount[number];
@@ -12,7 +13,7 @@ const key = eventInfo.event_image;
   const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+    const base = process.env.NEXT_PUBLIC_API_BASE ?? serverUrl;
     const url = `${base}/images/url?key=${encodeURIComponent(key)}&ttl=36000`;
 
     const fetchImage = async () => {

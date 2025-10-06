@@ -14,6 +14,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { serverUrl } from "@/src/data/severUrl";
 
 /**
  * Notes:
@@ -21,7 +22,8 @@ import { toast } from "react-hot-toast";
  * 2) If you prefer an env var, set NEXT_PUBLIC_API_BASE in .env.local and replace HTTP_LINK below.
  */
 const BG_IMAGE = "/UCSD_1.webp"; // place your image at public/img/bg.png
-const HTTP_LINK ="http://127.0.0.1:8000";
+//const HTTP_LINK ="http://127.0.0.1:8000";
+const HTTP_LINK = serverUrl;
 
 export default function SignIn_page() {
   const router = useRouter();
