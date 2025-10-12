@@ -27,16 +27,32 @@ const MyAccount_page = () =>{
       await new Promise((resolve) => setTimeout(resolve, 3000));
       window.location.href = "/";
       return;
-    }})();
+    }
+    const jwtTokenInfoStr = localStorage.getItem("JWT_access_token_Info");
+    console.log("time now:", Date.now()/1000);
+    console.log("token expire at:", jwtTokenInfoStr && JSON.parse(jwtTokenInfoStr).expireAt);
+    if(jwtTokenInfoStr && JSON.parse(jwtTokenInfoStr).expireAt < (Date.now()/1000)){
+      toast.error("Your session has expired, please sign in again.", {duration: 3000});
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      localStorage.removeItem("JWT_access_token_Info");
+      window.location.href = "/";
+      return;
+    }
+    })();
+
 
     if(localStorage.getItem("JWT_access_token_Info") === null){
       return;
     }
 
+    
+
     if (ran.current) return;
     ran.current = true;
 
     const jwtInfo = JSON.parse(localStorage.getItem("JWT_access_token_Info")||"");
+    console.log("jwtInfo:");
+    console.log(jwtInfo);
     const user_id:number = jwtInfo.user.user_id;
 
     const getUserInfo = async() =>{
@@ -64,6 +80,7 @@ const MyAccount_page = () =>{
         const output = await res.json();
         console.log("getUserBookedEventsInfo:");
         console.log(output);
+
         setUserBookedEventsInfo(output);
         setUserBookedEventsInfoUpComing(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) >= new Date()));
         setUserBookedEventsInfoHistory(output.filter((event: { event_start_date_and_time: Date; }) => new Date(event.event_start_date_and_time) < new Date()));

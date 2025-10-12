@@ -65,6 +65,7 @@ export default function SignIn_page() {
       }
       toast.success("you are signed in successfully, welcome back! :)", {duration: 5000});
       console.log(output);
+      console.log("Current date and time:", new Date().toUTCString());
       localStorage.setItem("JWT_access_token_Info", JSON.stringify(output));
 
       return;
